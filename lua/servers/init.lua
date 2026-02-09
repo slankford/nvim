@@ -1,11 +1,21 @@
--- local capabilities = require("cmp_nvim_lsp").default_capabilities()
+-- local lspconfig = require("lspconfig")
+--
+-- lspconfig.lua_ls.setup({})
+-- lspconfig.ts_ls.setup({})
+
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+local servers = {
+  "lua_ls",
+  "ts_ls"
+}
 
 -- Language Server Protocol (LSP)
--- require("servers.lua_ls")(capabilities)
+require("servers.lua_ls")(capabilities)
 -- require("servers.pyright")(capabilities)
 -- require("servers.gopls")(capabilities)
 -- require("servers.jsonls")(capabilities)
--- require("servers.ts_ls")(capabilities)
+require("servers.ts_ls")(capabilities)
 -- require("servers.bashls")(capabilities)
 -- require("servers.clangd")(capabilities)
 -- require("servers.dockerls")(capabilities)
@@ -15,10 +25,10 @@
 -- require("servers.solidity_ls_nomicfoundation")(capabilities)
 
 -- Linters & Formatters
-require("servers.efm-langserver")--(capabilities)
+require("servers.efm-langserver")(capabilities)
 
-vim.lsp.enable({
-  'lua_ls',
+-- vim.lsp.enable({
+  -- 'lua_ls',
   -- 'pyright',
   -- 'gopls',
   -- 'jsonls',
@@ -31,7 +41,7 @@ vim.lsp.enable({
   -- 'tailwindcss',
   -- 'solidity_ls_nomicfoundation',
   -- 'efm',
-})
+-- })
 -- local lspconfig = require('lspconfig')
 --
 -- local on_attach = function(client, bufnr)

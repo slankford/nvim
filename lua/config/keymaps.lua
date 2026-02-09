@@ -86,6 +86,7 @@ if vim.g.vscode then
   map("n", "gr", function() vim.fn.VSCodeNotify("editor.action.referenceSearch.trigger") end, { noremap = true, silent = true })
 
 
+
 	-- native neovim keymaps
   map("n", "<leader>gd", function() vim.fn.VSCodeNotify("editor.action.peekDefinition") end, opts) -- goto definition
   map("n", "<leader>gD", function() vim.fn.VSCodeNotify("editor.action.revealDefinition") end, opts) -- goto definition
@@ -99,10 +100,10 @@ if vim.g.vscode then
   map("n", "K", function() vim.fn.VSCodeNotify("editor.action.showHover") end, opts) -- hover documentation
 
   -- NvimTree VSCode equivalents
-  map("n", "<leader>m", function() vim.fn.VSCodeNotify("workbench.files.action.focusFilesExplorer") end, { desc = "Focus on file explorer (VSCode)" })
-  map("n", "<leader>e", function() vim.fn.VSCodeNotify("workbench.explorer.fileView.toggle") end, { desc = "Toggle file explorer (VSCode)" })
-  
-  
+  map("n", "<leader>m", function() vim.fn.VSCodeNotify("workbench.view.explorer") end, { desc = "Focus on file explorer (VSCode)" })
+  map("n", "<leader>e", function() vim.fn.VSCodeNotify("workbench.action.closeSidebar") end, { desc = "Minimize (close) explorer sidebar (VSCode)" })
+
+
   -- VSCode equivalent mappings for common Telescope commands
   -- All files search (Quick Open)
   map("n", "<leader>pf", function() vim.fn.VSCodeNotify("workbench.action.quickOpen") end, { desc = "All files search" })
@@ -144,6 +145,10 @@ else
   -- NvimTree File Explorer
   map("n", "<leader>m", "<Cmd>NvimTreeFocus<CR>", { desc = "Focus on file explorer" })
   map("n", "<leader>e", "<Cmd>NvimTreeToggle<CR>", { desc = "Toggle file explorer" })
+
+  map("n", "<leader>nh", function()
+    require("mini.notify").history()
+  end, { desc = "Notification History" })
 
   -- vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Move to left window" })
   -- vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Move to bottom window" })
