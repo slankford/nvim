@@ -31,15 +31,25 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 
 -- format on save using efm langserver and configured formatters
-local lsp_fmt_group = vim.api.nvim_create_augroup("FormatOnSaveGroup", {})
 vim.api.nvim_create_autocmd("BufWritePre", {
-	group = lsp_fmt_group,
 	callback = function()
-		local efm = vim.lsp.get_clients({ name = "efm" })
-		if vim.tbl_isempty(efm) then
+		-- Skip formatting if the buffer-local flag is set
+		if vim.b.disable_autoformat then
 			return
 		end
-		vim.lsp.buf.format({ name = "efm", async = true })
+
+		-- Save cursor position
+		local pos = vim.api.nvim_win_get_cursor(0)
+
+		-- Format only using efm
+		vim.lsp.buf.format({
+			filter = function(client)
+				return client.name == "efm"
+			end,
+		})
+
+		-- Restore cursor position
+		vim.api.nvim_win_set_cursor(0, pos)
 	end,
 })
 

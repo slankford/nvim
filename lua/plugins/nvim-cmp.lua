@@ -64,14 +64,20 @@ return {
 				["<C-Space>"] = cmp.mapping.complete(),
 				["<C-e>"] = cmp.mapping.abort(),
 				["<CR>"] = cmp.mapping.confirm({ select = false }),
+				["<Tab>"] = cmp.mapping(function(fallback)
+					if not cmp.visible() then
+						cmp.complete()
+					end
+					cmp.confirm({ select = true })
+				end, { "i", "s" }),
 			}),
 
 			sources = {
-				{ name = "codeium" },
-				{ name = "luasnip" },
 				{ name = "nvim_lsp" },
+				{ name = "luasnip" },
 				{ name = "buffer" },
 				{ name = "path" },
+				{ name = "codeium" },
 				{ name = "nvim_lsp_signature_help" },
 			},
 		})

@@ -1,25 +1,20 @@
 -- ================================================================================================
--- TITLE : lua_ls (Lua Language Server) LSP Setup
--- LINKS :
---   > github: https://github.com/LuaLS/lua-language-server
 -- ================================================================================================
 
 local M = {}
 
 --- @param capabilities table LSP client capabilities (typically from nvim-cmp or similar)
 function M.setup(capabilities)
-	vim.lsp.config('lua_ls', {
+	vim.lsp.config("pyright", {
 		capabilities = capabilities,
 		settings = {
-			Lua = {
-				diagnostics = {
-					globals = { "vim" },
-				},
-        workspace = {
-					library = {
-						vim.fn.expand("$VIMRUNTIME/lua"),
-						vim.fn.expand("$XDG_CONFIG_HOME") .. "/nvim/lua",
-					},
+			python = {
+				disableOrganizeImports = false,
+				analysis = {
+					autoSearchPaths = true,
+					diagnosticMode = "workspace",
+					useLibraryCodeForTypes = true,
+					autoImportCompletions = true,
 				},
 			},
 		},

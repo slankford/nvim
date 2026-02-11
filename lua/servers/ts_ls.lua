@@ -4,10 +4,11 @@
 --   > github: https://github.com/typescript-language-server/typescript-language-server
 -- ================================================================================================
 
+local M = {}
+
 --- @param capabilities table LSP client capabilities (typically from nvim-cmp or similar)
---- @return nil
-return function( capabilities)
-	vim.lsp.config('ts_ls', {
+function M.setup(capabilities)
+	vim.lsp.config("ts_ls", {
 		capabilities = capabilities,
 		filetypes = {
 			"typescript",
@@ -21,5 +22,11 @@ return function( capabilities)
 				indentSize = 2,
 			},
 		},
+		on_attach = function(client)
+			client.server_capabilities.documentFormattingProvider = false
+			client.server_capabilities.documentRangeFormattingProvider = false
+		end,
 	})
 end
+
+return M
