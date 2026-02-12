@@ -256,6 +256,7 @@ else
 		vim.lsp.buf.references()
 	end, { noremap = true, silent = true, desc = "References" })
 end
+
 -- -- Telescope fuzzy finder
 -- local builtin = require('telescope.builtin')
 -- vim.keymap.set('n', '<leader>pf', builtin.find_files, { desc = 'All files search' })

@@ -3,26 +3,25 @@ return {
 	"nvim-treesitter/nvim-treesitter",
 	lazy = false,
 	build = ":TSUpdate",
-	event = { "BufReadPost", "BufNewFile"},
+	event = { "BufReadPost", "BufNewFile" },
 	opts = {
 		ensure_installed = {
-			'help',
-			'typescript',
-			'javascript',
-			'tsx',
-			'jsx',
-			'css',
-			'html',
-			'python',
-			'bash',
-			'lua',
+			"help",
+			"typescript",
+			"javascript",
+			"tsx",
+			"css",
+			"html",
+			"python",
+			"bash",
+			"lua",
 			"markdown",
 			"markdown_inline",
 			"dockerfile",
 			"json",
 			"yaml",
 			"vim",
-			"vimdoc"
+			"vimdoc",
 		},
 		-- Autoinstall languages that are not installed
 		auto_install = true,
@@ -48,8 +47,7 @@ return {
 				node_incremental = "<CR>",
 				scope_incremental = "<CR>",
 				node_decremental = "<S-TAB>",
-			}
-		}
-
-	}
+			},
+		},
+	},
 }

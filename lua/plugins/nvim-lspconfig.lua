@@ -14,23 +14,54 @@ return {
 		{ "mason-org/mason.nvim", opts = {} }, -- LSP/DAP/Linter installer & manager
 		"creativenull/efmls-configs-nvim", -- Preconfigured EFM Language Server setups
 		"hrsh7th/cmp-nvim-lsp", -- nvim-cmp source for LSP-based completion
-   {
-      "rcarriga/nvim-notify",              -- notification backend
-      opts = {
-        timeout = 8000,                    -- notifications last 8s
-        max_height = 20,
-        max_width = 50,
-      },
-      config = function(_, opts)
-        require("notify").setup(opts)
-        vim.notify = require("notify")     -- override vim.notify
-      end,
-    },
-    {
-      "nvimdev/lspsaga.nvim",
-      dependencies = { "rcarriga/nvim-notify" },
-      opts = {}, -- optional Lspsaga settings
-    },
+		{
+			"rcarriga/nvim-notify", -- notification backend
+			opts = {
+				timeout = 8000, -- notifications last 8s
+				max_height = 20,
+				max_width = 50,
+			},
+			config = function(_, opts)
+				require("notify").setup(opts)
+				vim.notify = require("notify") -- override vim.notify
+			end,
+		},
+		{
+			"nvimdev/lspsaga.nvim",
+			dependencies = { "rcarriga/nvim-notify" },
+			opts = {
+				-- Make lightbulb not as annoying
+				code_action_lightbulb = {
+					enable = false,
+					sign = false, -- optional, removes gutter signs
+					virtual_text = true, -- keeps inline text lightbulb
+					virtual_text_only = true,
+					update_in_insert = false,
+					sign_priority = 20,
+					show_server_name = false,
+					-- custom callback to only show for “real” code actions
+					-- code_action_callback = function(actions)
+					-- 	for _, a in ipairs(actions or {}) do
+					-- 		if not a.title:match("Move") then
+					-- 			return true
+					-- 		end
+					-- 	end
+					-- 	return false
+					-- end,
+				},
+				lightbulb = {
+					enable = false,
+				},
+				-- code_action_callback = function(actions)
+				-- 	for _, a in ipairs(actions or {}) do
+				-- 		if not a.title:match("Move") then
+				-- 			return true
+				-- 		end
+				-- 	end
+				-- 	return false
+				-- end,
+			},
+		},
 	},
 	config = function()
 		require("utils.diagnostics").setup()

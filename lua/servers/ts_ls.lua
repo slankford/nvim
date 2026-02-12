@@ -23,6 +23,7 @@ function M.setup(capabilities)
 			},
 		},
 		on_attach = function(client)
+			-- disable tsserver formatting if using efm
 			client.server_capabilities.documentFormattingProvider = false
 			client.server_capabilities.documentRangeFormattingProvider = false
 		end,
