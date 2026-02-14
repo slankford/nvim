@@ -7,8 +7,8 @@ local map = vim.keymap.set
 local opts = { silent = true }
 
 -- Center screen when jumping
-vim.keymap.set("n", "n", "nzzzv", { desc = "Next search result (centered)" })
-vim.keymap.set("n", "N", "Nzzzv", { desc = "Previous search result (centered)" })
+-- vim.keymap.set("n", "n", "nzzzv", { desc = "Next search result (centered)" })
+-- vim.keymap.set("n", "N", "Nzzzv", { desc = "Previous search result (centered)" })
 vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Half page down (centered)" })
 vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Half page up (centered)" })
 
@@ -19,10 +19,10 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Half page up (centered)" })
 -- vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Move to right window" })
 
 -- Splitting & Resizing
-vim.keymap.set("n", "<S-Up>", "<Cmd>resize +2<CR>", { desc = "Increase window height" })
-vim.keymap.set("n", "<S-Down>", "<Cmd>resize -2<CR>", { desc = "Decrease window height" })
-vim.keymap.set("n", "<S-Right>", "<Cmd>vertical resize -2<CR>", { desc = "Decrease window width" })
-vim.keymap.set("n", "<S-Left>", "<Cmd>vertical resize +2<CR>", { desc = "Increase window width" })
+vim.keymap.set("n", "<S-Down>", "<Cmd>resize +2<CR>", { desc = "Increase window height" })
+vim.keymap.set("n", "<S-Up>", "<Cmd>resize -2<CR>", { desc = "Decrease window height" })
+vim.keymap.set("n", "<S-Left>", "<Cmd>vertical resize -2<CR>", { desc = "Decrease window width" })
+vim.keymap.set("n", "<S-Right>", "<Cmd>vertical resize +2<CR>", { desc = "Increase window width" })
 
 -- Better indenting in visual mode
 vim.keymap.set("v", "<", "<gv", { desc = "Indent left and reselect" })
