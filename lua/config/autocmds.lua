@@ -33,8 +33,11 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 -- format on save using efm langserver and configured formatters
 vim.api.nvim_create_autocmd("BufWritePre", {
 	callback = function()
-		-- Skip formatting if the buffer-local flag is set
 		if vim.b.disable_autoformat then
+			return
+		end
+		local first_line = vim.api.nvim_buf_get_lines(0, 0, 1, false)[1] or ""
+		if first_line:match("@noformat") then
 			return
 		end
 

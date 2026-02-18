@@ -1,3 +1,4 @@
+-- @noformat
 -- ================================================================================================
 -- TITLE: NeoVim keymaps
 -- ABOUT: sets some quality-of-life keymaps
@@ -255,32 +256,21 @@ else
 	map("n", "gr", function()
 		vim.lsp.buf.references()
 	end, { noremap = true, silent = true, desc = "References" })
-end
 
--- -- Telescope fuzzy finder
--- local builtin = require('telescope.builtin')
--- vim.keymap.set('n', '<leader>pf', builtin.find_files, { desc = 'All files search' })
--- vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'All files search' })
---
--- vim.keymap.set('n', '<C-p>', builtin.git_files, { desc = 'Git files search' })
--- vim.keymap.set('n', '<leader>pg', builtin.git_files, { desc = 'Git files search' })
---
--- vim.keymap.set('n', '<leader>pb', builtin.buffers, { desc = 'Buffer search' })
--- vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Buffer search' })
---
--- vim.keymap.set('n', '<leader>ps', function()
--- 	builtin.grep_string({ search = vim.fn.input("Grep > ") });
--- end)
--- vim.keymap.set('n', '<leader>fg', function()
--- 	builtin.grep_string({ search = vim.fn.input("Grep > ") });
--- end)
---
--- vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Help tags search' })
--- vim.keymap.set('n', '<leader>ph', builtin.help_tags, { desc = 'Help tags search' })
---
--- vim.keymap.set('n', '<leader>px', builtin.diagnostics, { desc = 'Diagnostics search' })
--- vim.keymap.set('n', '<leader>fx', builtin.diagnostics, { desc = 'Diagnostics search' })
---
--- vim.keymap.set('n', '<leader>fs', builtin.lsp_document_symbols, { desc = 'Document symbol search' })
---
--- vim.keymap.set('n', '<leader>fS', builtin.lsp_workspace_symbols, { desc = 'Workspace symbol search' })
+	local tb = function() return require("telescope.builtin") end
+	map("n", "<leader>pf", function() tb().find_files() end, { desc = "All files search" })
+	map("n", "<leader>ff", function() tb().find_files() end, { desc = "All files search" })
+	map("n", "<C-p>", function() tb().git_files() end, { desc = "Git files search" })
+	map("n", "<leader>pG", function() tb().git_files() end, { desc = "Git files search" })
+	map("n", "<leader>pg", function() tb().git_status() end, { desc = "Git status" })
+	map("n", "<leader>pb", function() tb().buffers() end, { desc = "Buffer search" })
+	map("n", "<leader>fb", function() tb().buffers() end, { desc = "Buffer search" })
+	map("n", "<leader>ps", function() tb().live_grep() end, { desc = "Live grep" })
+	map("n", "<leader>fg", function() tb().live_grep() end, { desc = "Live grep" })
+	map("n", "<leader>fh", function() tb().help_tags() end, { desc = "Help tags search" })
+	map("n", "<leader>ph", function() tb().help_tags() end, { desc = "Help tags search" })
+	map("n", "<leader>px", function() tb().diagnostics() end, { desc = "Diagnostics search" })
+	map("n", "<leader>fx", function() tb().diagnostics() end, { desc = "Diagnostics search" })
+	map("n", "<leader>fs", function() tb().lsp_document_symbols() end, { desc = "Document symbol search" })
+	map("n", "<leader>fS", function() tb().lsp_workspace_symbols() end, { desc = "Workspace symbol search" })
+end
