@@ -20,7 +20,9 @@ return {
 				git_ignored = false, -- Show gitignored files
 			},
 			view = {
-				adaptive_size = true,
+				-- width = 35,
+				preserve_window_proportions = true,
+				adaptive_size = false,
 			},
 		})
 	end,

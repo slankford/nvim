@@ -13,18 +13,6 @@ local opts = { silent = true }
 vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Half page down (centered)" })
 vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Half page up (centered)" })
 
--- Better window navigation
--- vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Move to left window" })
--- vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Move to bottom window" })
--- vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Move to top window" })
--- vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Move to right window" })
-
--- Splitting & Resizing
-vim.keymap.set("n", "<S-Down>", "<Cmd>resize +2<CR>", { desc = "Increase window height" })
-vim.keymap.set("n", "<S-Up>", "<Cmd>resize -2<CR>", { desc = "Decrease window height" })
-vim.keymap.set("n", "<S-Left>", "<Cmd>vertical resize -2<CR>", { desc = "Decrease window width" })
-vim.keymap.set("n", "<S-Right>", "<Cmd>vertical resize +2<CR>", { desc = "Increase window width" })
-
 -- Better indenting in visual mode
 vim.keymap.set("v", "<", "<gv", { desc = "Indent left and reselect" })
 vim.keymap.set("v", ">", ">gv", { desc = "Indent right and reselect" })
@@ -222,7 +210,7 @@ else
 	map("n", "<leader>bp", "<Cmd>bprevious<CR>", { desc = "Previous buffer" })
 
 	map("n", "<leader>sv", "<Cmd>vsplit<CR>", { desc = "Split window vertically" })
-	map("n", "<leader>sh", "<Cmd>split<CR>", { desc = "Split window horizontally" })
+	map("n", "<leader>ss", "<Cmd>split<CR>", { desc = "Split window horizontally" })
 
 	-- NvimTree File Explorer
 	-- map("n", "<leader>m", "<Cmd>NvimTreeFocus<CR>", { desc = "Focus on file explorer" })
