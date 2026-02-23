@@ -12,6 +12,28 @@ return {
 	"neovim/nvim-lspconfig",
 	dependencies = {
 		{ "mason-org/mason.nvim", opts = {} }, -- LSP/DAP/Linter installer & manager
+		{
+			"mason-org/mason-lspconfig.nvim",
+			opts = {
+				ensure_installed = {
+					"lua_ls",
+					"pyright",
+					"jsonls",
+					"ts_ls",
+					"bashls",
+					"dockerls",
+					"emmet_ls",
+					"yamlls",
+				},
+			},
+		},
+		{
+			"WhoIsSethDaniel/mason-tool-installer.nvim",
+			opts = {
+				ensure_installed = { "efm" },
+				run_on_start = true,
+			},
+		},
 		"creativenull/efmls-configs-nvim", -- Preconfigured EFM Language Server setups
 		"hrsh7th/cmp-nvim-lsp", -- nvim-cmp source for LSP-based completion
 		{
