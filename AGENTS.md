@@ -84,6 +84,8 @@ return {
 - Separate VSCode and Neovim keymaps using `if vim.g.vscode then`
 - Center screen when jumping/searching (use `zzzv` pattern)
 - Use consistent keymap patterns across similar operations
+- Keep plugin-specific keymaps in the plugin file under `lua/plugins/` (inside plugin `config`/`keys`), not in `lua/config/keymaps.lua`
+- Keep only core/editor keymaps (that work without optional plugins) in `lua/config/keymaps.lua`
 
 ### Autocmd Structure
 - Create augroup with descriptive name using `vim.api.nvim_create_augroup()`

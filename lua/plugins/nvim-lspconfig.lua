@@ -37,18 +37,6 @@ return {
 		"creativenull/efmls-configs-nvim", -- Preconfigured EFM Language Server setups
 		"hrsh7th/cmp-nvim-lsp", -- nvim-cmp source for LSP-based completion
 		{
-			"rcarriga/nvim-notify", -- notification backend
-			opts = {
-				timeout = 8000, -- notifications last 8s
-				max_height = 20,
-				max_width = 50,
-			},
-			config = function(_, opts)
-				require("notify").setup(opts)
-				vim.notify = require("notify") -- override vim.notify
-			end,
-		},
-		{
 			"nvimdev/lspsaga.nvim",
 			dependencies = { "rcarriga/nvim-notify" },
 			opts = {

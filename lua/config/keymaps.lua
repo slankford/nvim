@@ -212,15 +212,6 @@ else
 	map("n", "<leader>sv", "<Cmd>vsplit<CR>", { desc = "Split window vertically" })
 	map("n", "<leader>ss", "<Cmd>split<CR>", { desc = "Split window horizontally" })
 
-	-- NvimTree File Explorer
-	-- map("n", "<leader>m", "<Cmd>NvimTreeFocus<CR>", { desc = "Focus on file explorer" })
-	map("n", "<leader>m", "<Cmd>NvimTreeFindFile<CR>", { desc = "Focus on file explorer" })
-	map("n", "<leader>e", "<Cmd>NvimTreeToggle<CR>", { desc = "Toggle file explorer" })
-
-	map("n", "<leader>nh", function()
-		require("mini.notify").history()
-	end, { desc = "Notification History" })
-
 	-- leader w: save file
 	map("n", "<leader>w", ":w<CR>", opts)
 	-- leader q: close editor/tab
@@ -237,28 +228,7 @@ else
 	map("n", "gh", function()
 		vim.lsp.buf.hover()
 	end, { desc = "Hover" })
-	-- map("n", "<leader>u", function()
-	-- 	vim.lsp.buf.references()
-	-- end, { desc = "References" })
-	map("n", "<leader>u", "<cmd>Telescope lsp_references<CR>", { noremap = true, silent = true })
 	map("n", "gr", function()
 		vim.lsp.buf.references()
 	end, { noremap = true, silent = true, desc = "References" })
-
-	local tb = function() return require("telescope.builtin") end
-	map("n", "<leader>pf", function() tb().find_files() end, { desc = "All files search" })
-	map("n", "<leader>ff", function() tb().find_files() end, { desc = "All files search" })
-	map("n", "<C-p>", function() tb().git_files() end, { desc = "Git files search" })
-	map("n", "<leader>pG", function() tb().git_files() end, { desc = "Git files search" })
-	map("n", "<leader>pg", function() tb().git_status() end, { desc = "Git status" })
-	map("n", "<leader>pb", function() tb().buffers() end, { desc = "Buffer search" })
-	map("n", "<leader>fb", function() tb().buffers() end, { desc = "Buffer search" })
-	map("n", "<leader>ps", function() tb().live_grep() end, { desc = "Live grep" })
-	map("n", "<leader>fg", function() tb().live_grep() end, { desc = "Live grep" })
-	map("n", "<leader>fh", function() tb().help_tags() end, { desc = "Help tags search" })
-	map("n", "<leader>ph", function() tb().help_tags() end, { desc = "Help tags search" })
-	map("n", "<leader>px", function() tb().diagnostics() end, { desc = "Diagnostics search" })
-	map("n", "<leader>fx", function() tb().diagnostics() end, { desc = "Diagnostics search" })
-	map("n", "<leader>fs", function() tb().lsp_document_symbols() end, { desc = "Document symbol search" })
-	map("n", "<leader>fS", function() tb().lsp_workspace_symbols() end, { desc = "Workspace symbol search" })
 end
