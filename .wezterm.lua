@@ -53,6 +53,20 @@ local function split_resize_or_send(direction, delta)
 	end)
 end
 
+local function in_opencode(pane)
+	local p = (pane:get_foreground_process_name() or ""):lower()
+	return p:find("opencode", 1, true) ~= nil
+end
+
+local function maybe_scroll(key, pages)
+	return wezterm.action_callback(function(window, pane)
+		window:perform_action(
+			in_opencode(pane) and act.ScrollByPage(pages) or act.SendKey({ key = key, mods = "CTRL" }),
+			pane
+		)
+	end)
+end
+
 config.keys = {
 
 	-- Pain navigation
@@ -65,6 +79,10 @@ config.keys = {
 	{ key = "v", mods = "CTRL|SHIFT", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
 	{ key = "s", mods = "CTRL|SHIFT", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
 
+	-- rotate pains
+	{ key = "LeftArrow", mods = "CTRL|SHIFT", action = act.RotatePanes("CounterClockwise") },
+	{ key = "RightArrow", mods = "CTRL|SHIFT", action = act.RotatePanes("Clockwise") },
+
 	-- Pain resizes
 	{ key = "LeftArrow", mods = "SHIFT", action = split_resize_or_send("Left", 3) },
 	{ key = "RightArrow", mods = "SHIFT", action = split_resize_or_send("Right", 3) },
@@ -74,6 +92,9 @@ config.keys = {
 	-- Better tab nav
 	{ key = "l", mods = "CTRL|SHIFT", action = act.ActivateTabRelative(1) },
 	{ key = "h", mods = "CTRL|SHIFT", action = act.ActivateTabRelative(-1) },
+	-- Better window nav
+	{ key = "]", mods = "CTRL|SHIFT", action = act.ActivateWindowRelative(1) },
+	{ key = "[", mods = "CTRL|SHIFT", action = act.ActivateWindowRelative(-1) },
 
 	-- Zoom in on current pane, toggle
 	{ key = "z", mods = "CTRL|SHIFT", action = act.TogglePaneZoomState },
@@ -84,6 +105,14 @@ config.keys = {
 		mods = "CTRL|SHIFT",
 		action = wezterm.action_callback(function(_window, pane)
 			pane:move_to_new_tab()
+		end),
+	},
+	-- Move current pane to new window
+	{
+		key = "Enter",
+		mods = "CTRL|SHIFT",
+		action = wezterm.action_callback(function(_window, pane)
+			pane:move_to_new_window()
 		end),
 	},
 
@@ -107,5 +136,9 @@ config.keys = {
 			window:active_tab():set_title("")
 		end),
 	},
+
+	-- Overwrite ctrl+u/d for scrolling
+	{ key = "d", mods = "CTRL", action = maybe_scroll("d", 0.5) },
+	{ key = "u", mods = "CTRL", action = maybe_scroll("u", -0.5) },
 }
 return config

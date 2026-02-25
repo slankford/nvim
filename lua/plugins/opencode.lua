@@ -16,6 +16,8 @@ return {
 	config = function()
 		local opencode_port_a = 11434
 		local opencode_port_b = 11435
+		local opencode_port_c = 11436
+		local opencode_port_d = 11437
 		local active_port = opencode_port_a
 
 		local function keybind_for_port(port)
@@ -24,6 +26,12 @@ return {
 			end
 			if port == opencode_port_b then
 				return "<leader>o,"
+			end
+			if port == opencode_port_c then
+				return "<leader>o/"
+			end
+			if port == opencode_port_d then
+				return "<leader>o;"
 			end
 			return "(no mapped keybind)"
 		end
@@ -201,6 +209,14 @@ return {
 		vim.keymap.set("n", "<leader>o,", function()
 			start_and_switch(opencode_port_b)
 		end, { desc = "Start/switch opencode B" })
+
+		vim.keymap.set("n", "<leader>o/", function()
+			start_and_switch(opencode_port_c)
+		end, { desc = "Start/switch opencode C" })
+
+		vim.keymap.set("n", "<leader>o;", function()
+			start_and_switch(opencode_port_d)
+		end, { desc = "Start/switch opencode D" })
 
 		vim.keymap.set("n", "<leader>oq", function()
 			require("opencode.events").disconnect()
