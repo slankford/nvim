@@ -46,6 +46,7 @@ vim.opt.lazyredraw = false -- redraw while executing macros (butter UX)
 vim.opt.redrawtime = 10000 -- Timeout for syntax highlighting redraw
 vim.opt.maxmempattern = 20000 -- Max memory for pattern matching
 vim.opt.synmaxcol = 300 -- Syntax highlighting column limit
+vim.opt.termsync = false -- prevent weird wezterm scanline graphics issue?
 
 -- File Handling
 vim.opt.backup = false -- Don't create backup files
