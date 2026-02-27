@@ -10,7 +10,8 @@ require("servers.lua_ls").setup(capabilities)
 require("servers.pyright").setup(capabilities)
 -- require("servers.gopls")(capabilities)
 require("servers.jsonls").setup(capabilities)
-require("servers.ts_ls").setup(capabilities)
+-- require("servers.ts_ls").setup(capabilities)
+require("servers.vtsls").setup(capabilities)
 require("servers.bashls").setup(capabilities)
 -- require("servers.clangd")(capabilities)
 require("servers.dockerls").setup(capabilities)
@@ -27,7 +28,8 @@ vim.lsp.enable({
 	"pyright",
 	-- 'gopls',
 	"jsonls",
-	"ts_ls",
+	-- "ts_ls",
+	"vtsls",
 	"bashls",
 	-- 'clangd',
 	"dockerls",
