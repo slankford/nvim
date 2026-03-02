@@ -3,11 +3,16 @@ local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 local act = wezterm.action
 
+config.front_end = "OpenGL" -- Or "WebGPU". Attempt graphic issue fix on mac
+
 config.font = wezterm.font("Mononoki Nerd Font Mono")
 config.color_scheme = "Rosé Pine Moon (Gogh)"
 config.font_size = 19
 
 config.window_decorations = "RESIZE"
+
+-- Windows OS config:
+-- config.default_domain = "WSL:Ubuntu"
 
 -- config.colors = {
 
@@ -78,6 +83,10 @@ config.keys = {
 	-- Pain splits
 	{ key = "v", mods = "CTRL|SHIFT", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
 	{ key = "s", mods = "CTRL|SHIFT", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
+
+	-- Rebind copy/paste for Windows OS
+	-- { key = "c", mods = "CTRL|SHIFT|ALT", action = act.CopyTo("Clipboard") },
+	-- { key = "v", mods = "CTRL|SHIFT|ALT", action = act.PasteFrom("Clipboard") },
 
 	-- rotate pains
 	{ key = "LeftArrow", mods = "CTRL|SHIFT", action = act.RotatePanes("CounterClockwise") },
