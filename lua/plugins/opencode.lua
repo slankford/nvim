@@ -22,10 +22,10 @@ return {
 
 		local function keybind_for_port(port)
 			if port == opencode_port_a then
-				return "<leader>o."
+				return "<leader>o,"
 			end
 			if port == opencode_port_b then
-				return "<leader>o,"
+				return "<leader>o."
 			end
 			if port == opencode_port_c then
 				return "<leader>o/"
@@ -202,11 +202,11 @@ return {
 			require("opencode").select()
 		end, { desc = "Execute opencode action…" })
 
-		vim.keymap.set("n", "<leader>o.", function()
+		vim.keymap.set("n", "<leader>o,", function()
 			start_and_switch(opencode_port_a)
 		end, { desc = "Start/switch opencode A" })
 
-		vim.keymap.set("n", "<leader>o,", function()
+		vim.keymap.set("n", "<leader>o.", function()
 			start_and_switch(opencode_port_b)
 		end, { desc = "Start/switch opencode B" })
 
