@@ -73,12 +73,12 @@ return {
 			}),
 
 			sources = {
-				{ name = "nvim_lsp" },
-				{ name = "luasnip" },
-				{ name = "buffer" },
-				{ name = "path" },
-				{ name = "codeium" },
-				{ name = "nvim_lsp_signature_help" },
+				{ name = "codeium", priority = 1000 },
+				{ name = "nvim_lsp", priority = 900 },
+				{ name = "buffer", priority = 500 },
+				{ name = "path", priority = 250 },
+				{ name = "luasnip", priority = 201 },
+				{ name = "nvim_lsp_signature_help", priority = 200 },
 			},
 		})
 	end,
