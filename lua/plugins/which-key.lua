@@ -8,8 +8,13 @@
 return {
 	"folke/which-key.nvim",
 	event = "VeryLazy",
-	opts = {},
-	keys = {
+	opts = {
+		keys = { -- which-key specific functionality
+			scroll_down = "<c-f>", -- Need rebinding because I customize c-u and c-d with zz in keymaps
+			scroll_up = "<c-b>",
+		},
+	},
+	keys = { -- passed into which-key's setup() interally to Lazy
 		{
 			"<leader>?",
 			function()
