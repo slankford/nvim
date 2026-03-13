@@ -24,10 +24,14 @@ config.window_decorations = "RESIZE"
 --
 
 -- 🔥 Smart pane navigation helpers
+-- local function is_vim(pane)
+-- 	local process_name = pane:get_foreground_process_name() or ""
+-- 	process_name = process_name:lower()
+-- 	return process_name:find("nvim") or process_name:find("vim")
+-- end
+
 local function is_vim(pane)
-	local process_name = pane:get_foreground_process_name() or ""
-	process_name = process_name:lower()
-	return process_name:find("nvim") or process_name:find("vim")
+	return pane:get_user_vars().IS_NVIM == "true"
 end
 
 local function smart_nav(key, direction)
@@ -72,6 +76,9 @@ local function maybe_scroll(key, pages)
 	end)
 end
 
+local is_windows = wezterm.target_triple:find("windows") ~= nil
+local split_mods = is_windows and "CTRL|ALT" or "CTRL|SHIFT"
+
 config.keys = {
 
 	-- Pain navigation
@@ -80,13 +87,9 @@ config.keys = {
 	{ key = "k", mods = "CTRL", action = smart_nav("k", "Up") },
 	{ key = "l", mods = "CTRL", action = smart_nav("l", "Right") },
 
-	-- Pain splits
-	{ key = "v", mods = "CTRL|SHIFT", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
-	{ key = "s", mods = "CTRL|SHIFT", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
-
-	-- Rebind copy/paste for Windows OS
-	-- { key = "c", mods = "CTRL|SHIFT|ALT", action = act.CopyTo("Clipboard") },
-	-- { key = "v", mods = "CTRL|SHIFT|ALT", action = act.PasteFrom("Clipboard") },
+	-- Pane splits (avoid Ctrl+Shift+V paste conflict on Windows)
+	{ key = "v", mods = split_mods, action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+	{ key = "s", mods = split_mods, action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
 
 	-- rotate pains
 	{ key = "LeftArrow", mods = "CTRL|SHIFT", action = act.RotatePanes("CounterClockwise") },
