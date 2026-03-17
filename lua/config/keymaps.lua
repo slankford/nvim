@@ -30,6 +30,12 @@ vim.keymap.set("n", "gx", function()
 	vim.ui.open(vim.fn.expand("<cfile>"))
 end, { desc = "Open URL via macOS" })
 
+-- Session keymaps
+vim.keymap.set("n", "<leader>sm", ":mksession! ~/.config/nvim/session/mysession.vim<CR>",
+  { desc = "Save (make) session" })
+vim.keymap.set("n", "<leader>sl", ":source ~/.config/nvim/session/mysession.vim<CR>",
+  { desc = "Load session" })
+
 -- ==================== VSCode / Neovim unified shortcuts ====================
 -- Same keys: VSCode/Cursor actions when inside editor, Neovim equivalents when standalone.
 if vim.g.vscode then
