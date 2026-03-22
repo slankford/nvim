@@ -11,6 +11,13 @@ local M = {}
 --- @param capabilities table LSP client capabilities (from nvim-cmp)
 --- @return nil
 function M.setup(capabilities)
+	local sysname = vim.loop.os_uname().sysname
+	local efm_exe = vim.fn.exepath("efm-langserver")
+	if efm_exe == "" then
+		local suffix = sysname == "Windows_NT" and ".cmd" or ""
+		efm_exe = vim.fn.stdpath("data") .. "/mason/bin/efm-langserver" .. suffix
+	end
+
 	local luacheck = require("efmls-configs.linters.luacheck") -- lua linter
 	local stylua = require("efmls-configs.formatters.stylua") -- lua formatter
 	local flake8 = require("efmls-configs.linters.flake8") -- python linter
@@ -28,12 +35,15 @@ function M.setup(capabilities)
 	local solhint = require("efmls-configs.linters.solhint") -- solidity linter
 
 	vim.lsp.config("efm", {
+		cmd = { efm_exe ~= "" and efm_exe or "efm-langserver", "-q" },
 		capabilities = capabilities,
+		root_markers = { "project.godot", ".git" },
+		workspace_required = false,
 		filetypes = {
 			"c",
 			"cpp",
 			"css",
-			"docker",
+			"dockerfile",
 			"go",
 			"html",
 			"javascript",
@@ -63,7 +73,7 @@ function M.setup(capabilities)
 				c = { clangformat, cpplint },
 				cpp = { clangformat, cpplint },
 				css = { prettier },
-				docker = { hadolint, prettier },
+				dockerfile = { hadolint, prettier },
 				go = { gofumpt, go_revive },
 				html = { prettier },
 				javascript = { eslint_d, prettier },

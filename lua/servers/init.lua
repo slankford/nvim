@@ -17,6 +17,7 @@ require("servers.bashls").setup(capabilities)
 require("servers.dockerls").setup(capabilities)
 require("servers.emmet_ls").setup(capabilities)
 require("servers.yamlls").setup(capabilities)
+require("servers.gdscript").setup(capabilities)
 -- require("servers.tailwindcss")(capabilities)
 -- require("servers.solidity_ls_nomicfoundation")(capabilities)
 
@@ -35,6 +36,7 @@ vim.lsp.enable({
 	"dockerls",
 	"emmet_ls",
 	"yamlls",
+	"gdscript",
 	-- 'tailwindcss',
 	-- 'solidity_ls_nomicfoundation',
 	"efm",

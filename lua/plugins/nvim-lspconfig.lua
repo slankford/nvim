@@ -25,13 +25,13 @@ return {
 					"emmet_ls",
 					"yamlls",
 				},
-				automatic_enable = { exclude = { "ts_ls" } },
+				automatic_enable = { exclude = { "ts_ls", "efm" } },
 			},
 		},
 		{
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
 			opts = {
-				ensure_installed = { "efm" },
+				ensure_installed = { "efm", "gdtoolkit" },
 				run_on_start = true,
 			},
 		},
