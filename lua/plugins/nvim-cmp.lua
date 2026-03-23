@@ -73,7 +73,7 @@ return {
 			}),
 
 			sources = {
-				{ name = "codeium", priority = 1000 },
+				{ name = "codeium", priority = 1500 },
 				{ name = "nvim_lsp", priority = 900 },
 				{ name = "buffer", priority = 500 },
 				{ name = "path", priority = 250 },
