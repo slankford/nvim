@@ -39,7 +39,8 @@ return {
 				options = {
 					theme = transparent and lualine_theme() or "rose-pine",
 					icons_enabled = true,
-					section_separators = { left = "", right = "" },
+					section_separators = transparent and { left = "", right = "" }
+						or { left = "", right = "" },
 					component_separators = "|",
 				},
 			})

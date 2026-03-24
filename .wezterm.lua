@@ -18,7 +18,7 @@ config.window_decorations = "RESIZE"
 config.background = {
 	-- Layer 1: The background image
 	{
-		source = { File = "/Users/silas/code/backgrounds/your_image.png" },
+		source = { File = "/Users/silas/code/backgrounds/tengoku-overtop.png" },
 		horizontal_align = "Center", -- Align the image (Left, Center, Right)
 		vertical_align = "Middle", -- Align the image (Top, Middle, Bottom)
 		-- Optional: adjust HSB and opacity
@@ -29,7 +29,7 @@ config.background = {
 		source = { Color = "#000000" }, -- Black overlay
 		height = "100%",
 		width = "100%",
-		opacity = 0.7, -- Adjust opacity as needed
+		opacity = 0.6, -- Adjust opacity as needed
 	},
 }
 
