@@ -12,6 +12,7 @@ return {
 		max_height = 20,
 		max_width = 90,
 		render = "wrapped-compact",
+		background_colour = "#000000",
 	},
 	config = function(_, opts)
 		local notify = require("notify")

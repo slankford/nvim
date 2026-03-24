@@ -215,6 +215,9 @@ else
 	map("n", "<leader>w", ":w<CR>", opts)
 	-- leader q: close editor/tab
 	map("n", "<leader>q", ":q<CR>", opts)
+	map("n", "<leader>tt", function()
+		require("utils.transparency").toggle()
+	end, { desc = "Toggle transparency" })
 
 	vim.keymap.set("n", "<leader>tf", function()
 		vim.b.disable_autoformat = not vim.b.disable_autoformat

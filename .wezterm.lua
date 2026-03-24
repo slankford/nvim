@@ -14,21 +14,24 @@ config.window_decorations = "RESIZE"
 -- Windows OS config:
 -- config.default_domain = "WSL:Ubuntu"
 
--- config.colors = {
-
--- }
-
--- config.window_background_opacity = 0.9
--- config.macos_window_background_blur = 10
---
---
-
--- 🔥 Smart pane navigation helpers
--- local function is_vim(pane)
--- 	local process_name = pane:get_foreground_process_name() or ""
--- 	process_name = process_name:lower()
--- 	return process_name:find("nvim") or process_name:find("vim")
--- end
+-- Define the background layers
+config.background = {
+	-- Layer 1: The background image
+	{
+		source = { File = "/Users/silas/code/backgrounds/your_image.png" },
+		horizontal_align = "Center", -- Align the image (Left, Center, Right)
+		vertical_align = "Middle", -- Align the image (Top, Middle, Bottom)
+		-- Optional: adjust HSB and opacity
+		-- hsb = { brightness = 0.5, saturation = 1.0, hue = 1.0 },
+	},
+	-- Layer 2: A semi-transparent color overlay for better text visibility (optional)
+	{
+		source = { Color = "#000000" }, -- Black overlay
+		height = "100%",
+		width = "100%",
+		opacity = 0.7, -- Adjust opacity as needed
+	},
+}
 
 local function is_vim(pane)
 	return pane:get_user_vars().IS_NVIM == "true"

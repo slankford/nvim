@@ -5,6 +5,13 @@ return {
 	lazy = false,
 	priority = 1000, -- low
 	config = function()
+		local transparency = require("utils.transparency")
+		transparency.setup({
+			enabled = true,
+			colorscheme = "rose-pine",
+		})
+
 		vim.cmd("colorscheme rose-pine")
-	end
+		transparency.apply()
+	end,
 }
