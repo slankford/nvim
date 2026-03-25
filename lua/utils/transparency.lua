@@ -80,6 +80,24 @@ local function clear_matching(prefix)
   end
 end
 
+local function apply_subtle_line_highlights()
+  local ok, visual = pcall(vim.api.nvim_get_hl, 0, { name = "Visual", link = false })
+  if not ok or not visual.bg then
+    return
+  end
+
+  pcall(vim.api.nvim_set_hl, 0, "TelescopeSelection", {
+    bg = visual.bg,
+    bold = true,
+    blend = 35,
+  })
+
+  pcall(vim.api.nvim_set_hl, 0, "TelescopePreviewLine", {
+    bg = visual.bg,
+    blend = 45,
+  })
+end
+
 function M.apply()
   if not vim.g.transparent_enabled then
     return
@@ -92,6 +110,8 @@ function M.apply()
   for _, prefix in ipairs(prefix_groups) do
     clear_matching(prefix)
   end
+
+  apply_subtle_line_highlights()
 end
 
 local function refresh_ui()
