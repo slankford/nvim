@@ -31,7 +31,7 @@ return {
 		{
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
 			opts = {
-				ensure_installed = { "efm", "gdtoolkit" },
+				ensure_installed = { "efm" },
 				run_on_start = true,
 			},
 		},

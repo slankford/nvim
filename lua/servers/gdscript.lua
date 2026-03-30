@@ -10,9 +10,15 @@ local M = {}
 function M.setup(capabilities)
 	vim.lsp.config("gdscript", {
 		capabilities = capabilities,
-		cmd = vim.lsp.rpc.connect("127.0.0.1", 6005),
-		filetypes = { "gdscript" },
+		-- cmd = vim.lsp.rpc.connect("127.0.0.1", 6005),
+		-- filetypes = { "gdscript" },
+    force_setup = true, -- because the LSP is global. Read more on lsp-zero docs about this.
+    single_file_support = false,
+    cmd = vim.lsp.rpc.connect("127.0.0.1", 6008),
+    -- cmd = {'ncat', '127.0.0.1', '6008'}, -- the important trick for Windows!
+    -- root_dir = require('lspconfig.util').root_pattern('project.godot', '.git'),
 		root_markers = { "project.godot", ".git" },
+    filetypes = { 'gdscript' }
 	})
 end
 
