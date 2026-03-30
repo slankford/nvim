@@ -8,10 +8,10 @@ return {
 		local transparency = require("utils.transparency")
 		transparency.setup({
 			enabled = true,
-			colorscheme = "rose-pine",
+			colorscheme = "rose-pine-moon",
 		})
 
-		vim.cmd("colorscheme rose-pine")
+		vim.cmd("colorscheme rose-pine-moon")
 		transparency.apply()
 	end,
 }
