@@ -91,6 +91,7 @@ end
 
 local is_windows = wezterm.target_triple:find("windows") ~= nil
 local split_mods = is_windows and "CTRL|ALT" or "CTRL|SHIFT"
+local pane_mod = is_windows and "CTRL" or "CMD"
 
 config.keys = {
 
@@ -140,6 +141,9 @@ config.keys = {
 			pane:move_to_new_window()
 		end),
 	},
+
+	-- Close the current pane (if it's the last pane, it closes the tab)
+	{ key = "w", mods = pane_mod, action = act.CloseCurrentPane({ confirm = false }) },
 
 	-- Rename tab
 	{
