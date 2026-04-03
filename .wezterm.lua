@@ -18,7 +18,7 @@ config.window_decorations = "RESIZE"
 config.background = {
 	-- Layer 1: The background image
 	{
-		source = { File = "/Users/silas/code/backgrounds/tengoku-overtop.png" },
+		source = { File = "/Users/silas/code/backgrounds/rose-pine-dawn.png" },
 		horizontal_align = "Center", -- Align the image (Left, Center, Right)
 		vertical_align = "Middle", -- Align the image (Top, Middle, Bottom)
 		-- Optional: adjust HSB and opacity
@@ -26,15 +26,25 @@ config.background = {
 	},
 	-- Layer 2: A semi-transparent color overlay for better text visibility (optional)
 	{
-		source = { Color = "#000000" }, -- Black overlay
+		source = { Color = "#171624" }, -- Rose pine moon dark overlay
+		-- rose pine moon bg color: 232136
 		height = "100%",
 		width = "100%",
-		opacity = 0.6, -- Adjust opacity as needed
+		opacity = 0.95, -- Adjust opacity as needed
 	},
 }
 
+local function basename(path)
+	return path and path:match("([^/\\]+)$") or ""
+end
+
 local function is_vim(pane)
-	return pane:get_user_vars().IS_NVIM == "true"
+	local proc = basename(pane:get_foreground_process_name()):lower()
+	local is_local_nvim = proc == "nvim"
+	local is_ssh = proc == "ssh"
+	local is_remote_nvim = pane:get_user_vars().IS_NVIM == "true"
+	return is_local_nvim or (is_ssh and is_remote_nvim)
+	-- return pane:get_user_vars().IS_NVIM == "true"
 end
 
 local function smart_nav(key, direction)

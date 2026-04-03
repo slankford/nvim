@@ -9,8 +9,37 @@
 
 return {
 	"numToStr/Comment.nvim",
+	lazy = false,
+	event = "InsertEnter",
+	dependencies = {
+		"nvim-treesitter/nvim-treesitter",
+		{
+			"JoosepAlviste/nvim-ts-context-commentstring",
+			opts = {
+				enable_autocmd = false,
+			},
+		},
+	},
 	config = function()
-		local prehook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook()
+		local ok, integration = pcall(require, "ts_context_commentstring.integrations.comment_nvim")
+		local ts_pre_hook = ok and integration.create_pre_hook() or nil
+		local pre_hook = function(ctx)
+			local ft = vim.bo.filetype
+			local needs_context = ft == "javascript"
+				or ft == "typescript"
+				or ft == "javascriptreact"
+				or ft == "typescriptreact"
+				or ft == "svelte"
+				or ft == "vue"
+			if not needs_context or not ts_pre_hook then
+				return nil
+			end
+			local hook_ok, value = pcall(ts_pre_hook, ctx)
+			if not hook_ok then
+				return nil
+			end
+			return value
+		end
 		require("Comment").setup({
 			padding = true,
 			sticky = true,
@@ -33,14 +62,8 @@ return {
 				extra = true,
 				extended = false,
 			},
-			pre_hook = prehook,
+			pre_hook = pre_hook,
 			post_hook = nil,
 		})
 	end,
-	event = "InsertEnter",
-	lazy = false,
-	dependencies = {
-		"nvim-treesitter/nvim-treesitter",
-		"JoosepAlviste/nvim-ts-context-commentstring",
-	},
 }
