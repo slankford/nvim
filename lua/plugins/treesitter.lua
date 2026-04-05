@@ -22,6 +22,9 @@ return {
 			"yaml",
 			"vim",
 			"vimdoc",
+      "gdscript",
+      "gdshader",
+      "godot_resource",
 		},
 		-- Autoinstall languages that are not installed
 		auto_install = true,
