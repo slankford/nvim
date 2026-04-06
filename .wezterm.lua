@@ -97,8 +97,8 @@ config.keys = {
 
 	-- Pain navigation
 	{ key = "h", mods = "CTRL", action = smart_nav("h", "Left") },
-	{ key = "j", mods = "CTRL", action = smart_nav("j", "Down") },
-	{ key = "k", mods = "CTRL", action = smart_nav("k", "Up") },
+	{ key = "j", mods = "CTRL|SHIFT", action = smart_nav("j", "Down") },
+	{ key = "k", mods = "CTRL|SHIFT", action = smart_nav("k", "Up") },
 	{ key = "l", mods = "CTRL", action = smart_nav("l", "Right") },
 
 	-- Pane splits (avoid Ctrl+Shift+V paste conflict on Windows)
