@@ -86,10 +86,6 @@ vim.g.clipboard = {
 		["+"] = osc52.copy("+"),
 		["*"] = osc52.copy("*"),
 	},
-	paste = {
-		["+"] = osc52.paste("+"),
-		["*"] = osc52.paste("*"),
-	},
 }
 vim.opt.modifiable = true -- Allow editing buffers
 vim.opt.encoding = "UTF-8" -- Use UTF-8 encoding
