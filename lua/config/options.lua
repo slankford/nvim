@@ -79,14 +79,19 @@ vim.opt.path:append("**") -- Search into subfolders with `gf`
 vim.opt.selection = "inclusive" -- Use inclusive selection
 vim.opt.mouse = "a" -- Enable mouse support
 vim.opt.clipboard:append("unnamedplus") -- Use system clipboard
-local osc52 = require("vim.ui.clipboard.osc52")
-vim.g.clipboard = {
-	name = "OSC 52",
-	copy = {
-		["+"] = osc52.copy("+"),
-		["*"] = osc52.copy("*"),
-	},
-}
+local is_ssh = vim.env.SSH_CONNECTION ~= nil or vim.env.SSH_TTY ~= nil
+if is_ssh then
+	local ok, osc52 = pcall(require, "vim.ui.clipboard.osc52")
+	if ok then
+		vim.g.clipboard = {
+			name = "OSC 52",
+			copy = {
+				["+"] = osc52.copy("+"),
+				["*"] = osc52.copy("*"),
+			},
+		}
+	end
+end
 vim.opt.modifiable = true -- Allow editing buffers
 vim.opt.encoding = "UTF-8" -- Use UTF-8 encoding
 vim.opt.wildmenu = true -- Enable command-line completion menu
