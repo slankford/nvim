@@ -90,16 +90,16 @@ local function maybe_scroll(key, pages)
 end
 
 local is_windows = wezterm.target_triple:find("windows") ~= nil
-local split_mods = is_windows and "CTRL|ALT" or "CTRL|SHIFT"
+local split_mods = is_windows and "CTRL|ALT" or "CTRL|CMD"
 local pane_mod = is_windows and "CTRL" or "CMD"
 
 config.keys = {
 
 	-- Pain navigation
-	{ key = "h", mods = "CTRL", action = smart_nav("h", "Left") },
-	{ key = "j", mods = "CTRL|SHIFT", action = smart_nav("j", "Down") },
-	{ key = "k", mods = "CTRL|SHIFT", action = smart_nav("k", "Up") },
-	{ key = "l", mods = "CTRL", action = smart_nav("l", "Right") },
+	{ key = "h", mods = split_mods, action = smart_nav("h", "Left") },
+	{ key = "j", mods = split_mods, action = smart_nav("j", "Down") },
+	{ key = "k", mods = split_mods, action = smart_nav("k", "Up") },
+	{ key = "l", mods = split_mods, action = smart_nav("l", "Right") },
 
 	-- Pane splits (avoid Ctrl+Shift+V paste conflict on Windows)
 	{ key = "v", mods = split_mods, action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
@@ -116,19 +116,19 @@ config.keys = {
 	{ key = "DownArrow", mods = "SHIFT", action = split_resize_or_send("Down", 2) },
 
 	-- Better tab nav
-	{ key = "l", mods = "CTRL|SHIFT", action = act.ActivateTabRelative(1) },
-	{ key = "h", mods = "CTRL|SHIFT", action = act.ActivateTabRelative(-1) },
+	{ key = "l", mods = "CTRL", action = act.ActivateTabRelative(1) },
+	{ key = "h", mods = "CTRL", action = act.ActivateTabRelative(-1) },
 	-- Better window nav
-	{ key = "]", mods = "CTRL|SHIFT", action = act.ActivateWindowRelative(1) },
-	{ key = "[", mods = "CTRL|SHIFT", action = act.ActivateWindowRelative(-1) },
+	{ key = "]", mods = split_mods, action = act.ActivateWindowRelative(1) },
+	{ key = "[", mods = split_mods, action = act.ActivateWindowRelative(-1) },
 
 	-- Zoom in on current pane, toggle
-	{ key = "z", mods = "CTRL|SHIFT", action = act.TogglePaneZoomState },
+	{ key = "z", mods = split_mods, action = act.TogglePaneZoomState },
 
 	-- Move current pane to new tab
 	{
 		key = "m",
-		mods = "CTRL|SHIFT",
+		mods = split_mods,
 		action = wezterm.action_callback(function(_window, pane)
 			pane:move_to_new_tab()
 		end),
@@ -136,7 +136,7 @@ config.keys = {
 	-- Move current pane to new window
 	{
 		key = "Enter",
-		mods = "CTRL|SHIFT",
+		mods = split_mods,
 		action = wezterm.action_callback(function(_window, pane)
 			pane:move_to_new_window()
 		end),
@@ -147,8 +147,8 @@ config.keys = {
 
 	-- Rename tab
 	{
-		key = "R",
-		mods = "CTRL|SHIFT",
+		key = "r",
+		mods = split_mods,
 		action = act.PromptInputLine({
 			description = "Rename tab",
 			action = wezterm.action_callback(function(window, pane, line)
@@ -159,8 +159,8 @@ config.keys = {
 		}),
 	},
 	{
-		key = "E",
-		mods = "CTRL|SHIFT",
+		key = "e",
+		mods = split_mods,
 		action = wezterm.action_callback(function(window, pane)
 			window:active_tab():set_title("")
 		end),
