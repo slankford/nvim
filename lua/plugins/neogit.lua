@@ -62,4 +62,11 @@ return {
 		{ "<leader>gO", "<cmd>DiffviewClose<cr>", desc = "Diffview close" },
 		{ "<leader>gh", "<cmd>DiffviewFileHistory %<cr>", desc = "File history" },
 	},
+	config = function()
+		require("neogit").setup({
+			console_timeout = 0, -- show console immediately
+			auto_show_console = true, -- auto-open for commands
+			auto_close_console = false, -- keep it open so you can read output
+		})
+	end,
 }
