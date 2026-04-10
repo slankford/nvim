@@ -21,9 +21,9 @@ return {
 		vim.keymap.set("n", "<leader>gs", gs.stage_hunk, { desc = "GitSigns stage hunk" })
 		vim.keymap.set("n", "<leader>gb", gs.blame_line, { desc = "GitSigns blame line" })
 		vim.keymap.set("n", "<leader>tb", gs.toggle_current_line_blame, { desc = "Toggle in line blame" })
-		vim.keymap.set("n", "<leader>gD", gs.diffthis, { desc = "Diff against head version of file" })
+		vim.keymap.set("n", "<leader>gdo", gs.diffthis, { desc = "Diff against head version of file" })
 		-- Toggle diff view for current buffer
-		vim.keymap.set("n", "<leader>gd", function()
+		vim.keymap.set("n", "<leader>gdc", function()
 			if vim.bo.modified then
 				require("gitsigns").diffthis("~")
 			else
