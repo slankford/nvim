@@ -66,6 +66,7 @@ return {
 		require("neogit").setup({
 			console_timeout = 0, -- show console immediately
 			auto_show_console = true, -- auto-open for commands
+			auto_show_console_on = "output",
 			auto_close_console = false, -- keep it open so you can read output
 		})
 	end,
