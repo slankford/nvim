@@ -13,6 +13,7 @@ config.window_decorations = "RESIZE"
 
 -- Windows OS config:
 -- config.default_domain = "WSL:Ubuntu"
+-- config.default_prog = { 'powershell.exe', '-NoLogo' }
 
 -- Define the background layers
 config.background = {
