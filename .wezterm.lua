@@ -5,7 +5,7 @@ local act = wezterm.action
 
 config.front_end = "OpenGL" -- Or "WebGPU". Attempt graphic issue fix on mac
 
-config.font = wezterm.font("Mononoki Nerd Font Mono")
+config.font = wezterm.font_with_fallback({"Mononoki Nerd Font Mono", "mononoki", "JetBrainsMono Nerd Font"})
 config.color_scheme = "Rosé Pine Moon (Gogh)"
 config.font_size = 19
 
@@ -92,7 +92,6 @@ end
 
 local is_windows = wezterm.target_triple:find("windows") ~= nil
 local split_mods = is_windows and "CTRL|ALT" or "CTRL|CMD"
-local pane_mod = is_windows and "CTRL" or "CMD"
 
 config.keys = {
 
@@ -144,7 +143,7 @@ config.keys = {
 	},
 
 	-- Close the current pane (if it's the last pane, it closes the tab)
-	{ key = "w", mods = pane_mod, action = act.CloseCurrentPane({ confirm = false }) },
+	{ key = "w", mods = split_mods, action = act.CloseCurrentPane({ confirm = false }) },
 
 	-- Rename tab
 	{
