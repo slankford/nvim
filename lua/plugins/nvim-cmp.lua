@@ -36,6 +36,14 @@ return {
 
 		require("luasnip.loaders.from_vscode").lazy_load()
 
+		local function deprioritize_snippet(entry1, entry2)
+			local kind1 = entry1:get_kind() == cmp.lsp.CompletionItemKind.Snippet
+			local kind2 = entry2:get_kind() == cmp.lsp.CompletionItemKind.Snippet
+			if kind1 ~= kind2 then
+				return not kind1
+			end
+		end
+
 		cmp.setup({
 			snippet = {
 				expand = function(args)
@@ -72,14 +80,27 @@ return {
 				-- 	cmp.confirm({ select = true })
 				-- end, { "i", "s" }),
 			}),
-
 			sources = {
 				{ name = "codeium", priority = 1500 },
 				{ name = "nvim_lsp", priority = 900 },
 				{ name = "buffer", priority = 500 },
 				{ name = "path", priority = 250 },
-				{ name = "luasnip", priority = 201 },
 				{ name = "nvim_lsp_signature_help", priority = 200 },
+				{ name = "luasnip", priority = 50 },
+			},
+			sorting = {
+				priority_weight = 2,
+				comparators = {
+					deprioritize_snippet,
+					cmp.config.compare.offset,
+					cmp.config.compare.exact,
+					cmp.config.compare.score,
+					cmp.config.compare.recently_used,
+					cmp.config.compare.kind,
+					cmp.config.compare.sort_text,
+					cmp.config.compare.length,
+					cmp.config.compare.order,
+				},
 			},
 		})
 	end,

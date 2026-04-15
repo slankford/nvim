@@ -22,7 +22,7 @@ return {
 					"vtsls",
 					"bashls",
 					"dockerls",
-					"emmet_ls",
+					-- "emmet_ls",
 					"yamlls",
 				},
 				automatic_enable = { exclude = { "ts_ls", "efm" } },

@@ -15,7 +15,7 @@ require("servers.vtsls").setup(capabilities)
 require("servers.bashls").setup(capabilities)
 -- require("servers.clangd")(capabilities)
 require("servers.dockerls").setup(capabilities)
-require("servers.emmet_ls").setup(capabilities)
+-- require("servers.emmet_ls").setup(capabilities)
 require("servers.yamlls").setup(capabilities)
 require("servers.gdscript").setup(capabilities)
 -- require("servers.tailwindcss")(capabilities)
@@ -34,7 +34,7 @@ vim.lsp.enable({
 	"bashls",
 	-- 'clangd',
 	"dockerls",
-	"emmet_ls",
+	-- "emmet_ls",
 	"yamlls",
 	"gdscript",
 	-- 'tailwindcss',
