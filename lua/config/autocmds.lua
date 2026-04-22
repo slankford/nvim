@@ -3,6 +3,9 @@
 -- ABOUT : automatically run code on defined events (e.g. save, yank)
 -- ================================================================================================
 local on_attach = require("utils.lsp").on_attach
+local scratchpad = require("utils.scratchpad")
+
+scratchpad.setup_autosave()
 
 -- Restore last cursor position when reopening a file
 local last_cursor_group = vim.api.nvim_create_augroup("LastCursorGroup", {})

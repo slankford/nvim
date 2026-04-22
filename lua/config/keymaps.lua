@@ -7,6 +7,11 @@
 local map = vim.keymap.set
 local opts = { silent = true }
 
+
+vim.keymap.set("n", "<leader>a", function()
+	require("utils.scratchpad").toggle()
+end, { desc = "Toggle Scratchpad (Floating)" })
+
 -- Center screen when jumping
 -- vim.keymap.set("n", "n", "nzzzv", { desc = "Next search result (centered)" })
 -- vim.keymap.set("n", "N", "Nzzzv", { desc = "Previous search result (centered)" })
