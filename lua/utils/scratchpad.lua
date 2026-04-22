@@ -1,6 +1,6 @@
 local M = {}
 
-local scratchpad_path = vim.fn.expand("~/.local/share/nvim/scratchpad.md")
+local scratchpad_path = vim.fs.joinpath(vim.fn.stdpath("data"), "scratchpad.md")
 
 local function ensure_file(path)
 	if vim.fn.filereadable(path) == 1 then
