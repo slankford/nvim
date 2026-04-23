@@ -99,10 +99,6 @@ if is_ssh then
 				["+"] = osc52.copy("+"),
 				["*"] = osc52.copy("*"),
 			},
-			paste = {
-				["+"] = osc52.paste("+"),
-				["*"] = osc52.paste("*"),
-			},
 		}
 		has_provider = true
 	end
