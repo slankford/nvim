@@ -93,11 +93,34 @@ local has_provider = false
 if is_ssh then
 	local ok, osc52 = pcall(require, "vim.ui.clipboard.osc52")
 	if ok then
+		local cache = {
+			["+"] = { lines = {}, regtype = "v" },
+			["*"] = { lines = {}, regtype = "v" },
+		}
+		local copy_plus = osc52.copy("+")
+		local copy_star = osc52.copy("*")
+
 		vim.g.clipboard = {
-			name = "OSC 52",
+			name = "OSC 52 (copy-only)",
 			copy = {
-				["+"] = osc52.copy("+"),
-				["*"] = osc52.copy("*"),
+				["+"] = function(lines, regtype)
+					cache["+"] = { lines = vim.deepcopy(lines), regtype = regtype }
+					copy_plus(lines, regtype)
+				end,
+				["*"] = function(lines, regtype)
+					cache["*"] = { lines = vim.deepcopy(lines), regtype = regtype }
+					copy_star(lines, regtype)
+				end,
+			},
+			paste = {
+				["+"] = function()
+					local item = cache["+"]
+					return vim.deepcopy(item.lines), item.regtype
+				end,
+				["*"] = function()
+					local item = cache["*"]
+					return vim.deepcopy(item.lines), item.regtype
+				end,
 			},
 		}
 		has_provider = true

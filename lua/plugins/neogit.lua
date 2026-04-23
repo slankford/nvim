@@ -63,11 +63,13 @@ return {
 		{ "<leader>gh", "<cmd>DiffviewFileHistory %<cr>", desc = "File history" },
 	},
 	config = function()
+		local is_ssh = vim.env.SSH_CONNECTION ~= nil or vim.env.SSH_TTY ~= nil
+
 		require("neogit").setup({
-			console_timeout = 0, -- show console immediately
-			auto_show_console = true, -- auto-open for commands
+			console_timeout = is_ssh and 2000 or 0,
+			auto_show_console = not is_ssh,
 			auto_show_console_on = "output",
-			auto_close_console = false, -- keep it open so you can read output
+			auto_close_console = true,
 		})
 	end,
 }
