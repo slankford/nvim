@@ -17,7 +17,7 @@ M.on_attach = function(event)
 	keymap("n", "gd", "<cmd>Lspsaga goto_definition<CR>", opts) -- goto definition
 	keymap("n", "gD", "<cmd>Lspsaga peek_definition<CR>", opts) -- goto definition
 	keymap("n", "gS", "<cmd>vsplit | Lspsaga goto_definition<CR>", opts) -- goto definition in split
-	keymap("n", "gvd", "<cmd>vsplit | Lspsaga goto_definition<CR>", opts)
+	keymap("n", "gH", "<cmd>hsplit | Lspsaga goto_definition<CR>", opts)
 	keymap("n", "gr", "<cmd>Lspsaga finder ref<CR>", opts)
 	keymap("n", "gi", "<cmd>Lspsaga finder imp<CR>", opts)
 	keymap("n", "<leader>rn", "<cmd>Lspsaga rename<CR>", opts) -- Rename symbol
