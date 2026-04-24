@@ -73,15 +73,18 @@ return {
 		})
 
 		local console_cleanup_group = vim.api.nvim_create_augroup("NeogitConsoleCleanup", { clear = true })
-		vim.api.nvim_create_autocmd("BufHidden", {
+		vim.api.nvim_create_autocmd({ "BufWinLeave", "BufHidden" }, {
 			group = console_cleanup_group,
-			pattern = "NeogitConsole",
 			callback = function(args)
-				if vim.api.nvim_buf_is_valid(args.buf) then
-					vim.schedule(function()
-						pcall(vim.api.nvim_buf_delete, args.buf, { force = true })
-					end)
+				if not vim.api.nvim_buf_is_valid(args.buf) then
+					return
 				end
+
+				if vim.api.nvim_buf_get_name(args.buf) ~= "NeogitConsole" then
+					return
+				end
+
+				pcall(vim.api.nvim_buf_delete, args.buf, { force = true })
 			end,
 		})
 	end,

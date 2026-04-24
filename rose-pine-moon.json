@@ -11,7 +11,7 @@
     "text": "#e0def4",
     "textMuted": "#908caa",
     "background": "none",
-    "backgroundPanel": "none",
+    "backgroundPanel": "#232136",
     "backgroundElement": "none",
     "backgroundElementBakIfDoNotWantNone": "#232136",
     "border": "#393552",
