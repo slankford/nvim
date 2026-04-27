@@ -63,29 +63,11 @@ return {
 		{ "<leader>gh", "<cmd>DiffviewFileHistory %<cr>", desc = "File history" },
 	},
 	config = function()
-		local is_ssh = vim.env.SSH_CONNECTION ~= nil or vim.env.SSH_TTY ~= nil
-
 		require("neogit").setup({
-			console_timeout = is_ssh and 2000 or 0,
-			auto_show_console = not is_ssh,
+			console_timeout = 2000,
+			auto_show_console = false,
 			auto_show_console_on = "output",
 			auto_close_console = true,
-		})
-
-		local console_cleanup_group = vim.api.nvim_create_augroup("NeogitConsoleCleanup", { clear = true })
-		vim.api.nvim_create_autocmd({ "BufWinLeave", "BufHidden" }, {
-			group = console_cleanup_group,
-			callback = function(args)
-				if not vim.api.nvim_buf_is_valid(args.buf) then
-					return
-				end
-
-				if vim.api.nvim_buf_get_name(args.buf) ~= "NeogitConsole" then
-					return
-				end
-
-				pcall(vim.api.nvim_buf_delete, args.buf, { force = true })
-			end,
 		})
 	end,
 }
