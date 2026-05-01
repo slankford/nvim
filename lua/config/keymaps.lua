@@ -209,6 +209,7 @@ if vim.g.vscode then
 	end, { desc = "Workspace symbol search" })
 else
 	-- Neovim: window navigation and LSP equivalents
+	map("n", "<leader><leader>", "<Cmd>b#<CR>", { desc = "Toggle previous buffer" })
 	map("n", "<leader>bn", "<Cmd>bnext<CR>", { desc = "Next buffer" })
 	map("n", "<leader>bp", "<Cmd>bprevious<CR>", { desc = "Previous buffer" })
   map({"n", "v"}, "<leader>bd", "<Cmd>%bd|e#|bd#<CR>", {desc = "Delete all but current buffer" })

@@ -21,10 +21,17 @@ return {
 	config = function()
 		-- Remove background color form NvimTree window
 		vim.cmd([[hi NvimTreeNormal guibg=NONE ctermbg=NONE]])
+		local tree_api = require("nvim-tree.api")
 
 		-- Keymaps
 		vim.keymap.set("n", "<leader>m", "<Cmd>NvimTreeFindFile<CR>", { desc = "Focus on file explorer" })
 		vim.keymap.set("n", "<leader>e", "<Cmd>NvimTreeToggle<CR>", { desc = "Toggle file explorer" })
+		vim.keymap.set("n", "<leader>>", function()
+			tree_api.tree.resize({ relative = 5 })
+		end, { desc = "Widen file explorer" })
+		vim.keymap.set("n", "<leader><", function()
+			tree_api.tree.resize({ relative = -5 })
+		end, { desc = "Narrow file explorer" })
 		require("nvim-tree").setup({
 			filters = {
 				dotfiles = false, -- Show hidden files (dotfiles)
