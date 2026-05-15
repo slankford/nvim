@@ -18,6 +18,9 @@ config.window_decorations = "RESIZE"
 -- config.default_prog = { 'powershell.exe', '-NoLogo' }
 
 if not is_windows then
+	-- Required for macOS dictation to function
+	config.use_ime = true
+
 	-- Define the background layers
 	config.background = {
 		-- Layer 1: The background image
