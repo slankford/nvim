@@ -41,8 +41,24 @@ if not is_windows then
 		},
 	}
 else
-	-- Windows specific settings
-	--
+  config.background = {
+    -- Layer 1: The background image
+    {
+      source = { File = "C:/Code/backgrounds/rose-pine-dawn.png" },
+      horizontal_align = "Center", -- Align the image (Left, Center, Right)
+      vertical_align = "Middle", -- Align the image (Top, Middle, Bottom)
+      -- Optional: adjust HSB and opacity
+      -- hsb = { brightness = 0.5, saturation = 1.0, hue = 1.0 },
+    },
+    -- Layer 2: A semi-transparent color overlay for better text visibility (optional)
+    {
+      source = { Color = "#171624" }, -- Rose pine moon dark overlay
+      -- rose pine moon bg color: 232136
+      height = "100%",
+      width = "100%",
+      opacity = 0.95, -- Adjust opacity as needed
+    },
+  }
 end
 
 local function basename(path)
