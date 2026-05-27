@@ -14,7 +14,7 @@ fi
 
 # Install important deps for Nvim
 sudo apt update
-sudo apt install -y ripgrep build-essential clang zsh zsh-autosuggestions zsh-syntax-highlighting zoxide
+sudo apt install -y ripgrep build-essential clang zsh zsh-autosuggestions zsh-syntax-highlighting zoxide nodejs npm
 
 LS_TOOL=""
 if apt-cache show eza >/dev/null 2>&1; then
@@ -30,12 +30,29 @@ else
 fi
 
 ## nvm for node/npm:
-curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-nvm install --lts
-nvm use --lts
-nvm alias default 'lts/*'
+if curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash; then
+	export NVM_DIR="$HOME/.nvm"
+	if [ -s "$NVM_DIR/nvm.sh" ]; then
+		. "$NVM_DIR/nvm.sh"
+		if command -v nvm >/dev/null 2>&1; then
+			nvm install --lts
+			nvm use --lts
+			nvm alias default 'lts/*'
+			echo "nvm installed and LTS node activated."
+		else
+			echo "nvm install script ran, but nvm is unavailable; using apt node/npm."
+		fi
+	else
+		echo "nvm init script not found; using apt node/npm."
+	fi
+else
+	echo "nvm install failed; using apt node/npm."
+fi
+
+if ! command -v npm >/dev/null 2>&1; then
+	echo "npm was not found after setup; install aborted."
+	exit 1
+fi
 
 ## tree-sitter-cli
 npm install -g tree-sitter-cli || true
