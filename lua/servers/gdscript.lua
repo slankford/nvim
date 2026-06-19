@@ -2,6 +2,8 @@
 -- TITLE : gdscript (Godot Language Server) LSP Setup
 -- LINKS :
 --   > docs: https://docs.godotengine.org/en/stable/tutorials/editor/external_editor.html
+--   > IMPORTANT SETUP GUIDE FOR NEW WINDOWS COMPUTER: https://mb-izzo.github.io/nvim-godot-solution/
+--   > Includes getting nmap installed (to replace ncat in cmd?)
 -- ================================================================================================
 
 local M = {}
