@@ -27,6 +27,7 @@ return {
     vim.keymap.set("n", "<leader>ph", function() tb().help_tags() end, { desc = "Help tags search" })
     vim.keymap.set("n", "<leader>px", function() tb().diagnostics() end, { desc = "Diagnostics search" })
     vim.keymap.set("n", "<leader>pr", function() tb().oldfiles() end, { desc = "Diagnostics search" })
+    vim.keymap.set("n", "<leader>pp", function() tb().resume() end, { desc = "Resume last search" })
 
 		vim.keymap.set("n", "<leader>ff", function() tb().find_files() end, { desc = "All files search" })
     vim.keymap.set("n", "<leader>fb", function() tb().buffers() end, { desc = "Buffer search" })
