@@ -29,7 +29,7 @@ vim.keymap.set("n", "J", "mzJ`z", { desc = "Join lines and keep cursor position"
 vim.keymap.set("n", "<leader>rc", "<Cmd>e ~/.config/nvim/init.lua<CR>", { desc = "Edit config" })
 
 -- Probably not needed
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
+vim.keymap.set("n", "<leader>pv", vim.cmd.Ex, { desc = ":Ex command (vim file explorer)" })
 
 vim.keymap.set("n", "gx", function()
 	vim.ui.open(vim.fn.expand("<cfile>"))
