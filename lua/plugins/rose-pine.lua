@@ -12,7 +12,6 @@ return {
 		})
 
 		vim.cmd("colorscheme rose-pine-moon")
-		transparency.apply()
 
     -- Godot specific highlighting fixes
     local function apply_gdscript_ts_highlights()
