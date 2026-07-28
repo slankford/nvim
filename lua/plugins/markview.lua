@@ -13,7 +13,7 @@ return {
 	-- dependencies = { "saghen/blink.cmp" },
 	config = function()
 		-- Keymaps
-		vim.keymap.set("n", "<leader>tm", ":Markview splitToggle<CR>", { desc = "Toggle Markview split view" })
-		vim.keymap.set("n", "<leader>tM", ":Markview toggle<CR>", { desc = "Toggle Markview in current buffer" })
+		vim.keymap.set("n", "<leader>tM", ":Markview splitToggle<CR>", { desc = "Toggle Markview split view" })
+		vim.keymap.set("n", "<leader>tm", ":Markview toggle<CR>", { desc = "Toggle Markview in current buffer" })
 	end,
 }

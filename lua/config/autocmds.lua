@@ -33,6 +33,18 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	end,
 })
 
+-- Wrap long lines in Markdown at word boundaries instead of running off-screen
+local markdown_wrap_group = vim.api.nvim_create_augroup("MarkdownWrap", {})
+vim.api.nvim_create_autocmd("FileType", {
+	group = markdown_wrap_group,
+	pattern = "markdown",
+	callback = function()
+		vim.opt_local.wrap = true
+		vim.opt_local.linebreak = true -- wrap at word boundaries, not mid-word
+		vim.opt_local.breakindent = true -- wrapped lines keep the paragraph's indent
+	end,
+})
+
 -- format on save using efm langserver and configured formatters
 vim.api.nvim_create_autocmd("BufWritePre", {
 	callback = function()
