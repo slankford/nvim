@@ -33,15 +33,23 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	end,
 })
 
--- Wrap long lines in Markdown at word boundaries instead of running off-screen
+-- Wrap long lines in Markdown at word boundaries instead of running off-screen.
+-- markview.nvim can't nicely decorate tables wider than the window while wrap
+-- is on (its own renderer bails out and leaves raw `|---|` text showing), so
+-- <leader>tw toggles wrap off/on per-buffer for viewing wide tables.
 local markdown_wrap_group = vim.api.nvim_create_augroup("MarkdownWrap", {})
 vim.api.nvim_create_autocmd("FileType", {
 	group = markdown_wrap_group,
 	pattern = "markdown",
-	callback = function()
+	callback = function(args)
 		vim.opt_local.wrap = true
 		vim.opt_local.linebreak = true -- wrap at word boundaries, not mid-word
 		vim.opt_local.breakindent = true -- wrapped lines keep the paragraph's indent
+
+		vim.keymap.set("n", "<leader>tw", function()
+			vim.wo.wrap = not vim.wo.wrap
+			vim.notify("Wrap " .. (vim.wo.wrap and "ON" or "OFF"), vim.log.levels.INFO)
+		end, { buffer = args.buf, desc = "Toggle wrap (for wide tables)" })
 	end,
 })
 
