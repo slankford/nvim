@@ -38,7 +38,7 @@ return {
 				git_ignored = false, -- Show gitignored files
 			},
 			view = {
-				-- width = 35,
+				width = 45,
 				preserve_window_proportions = true,
 				adaptive_size = false,
 			},
