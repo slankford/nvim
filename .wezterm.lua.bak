@@ -41,24 +41,8 @@ if not is_windows then
 		},
 	}
 else
-	config.background = {
-		-- Layer 1: The background image
-		{
-			source = { File = "C:/Code/backgrounds/rose-pine-dawn.png" },
-			horizontal_align = "Center", -- Align the image (Left, Center, Right)
-			vertical_align = "Middle", -- Align the image (Top, Middle, Bottom)
-			-- Optional: adjust HSB and opacity
-			-- hsb = { brightness = 0.5, saturation = 1.0, hue = 1.0 },
-		},
-		-- Layer 2: A semi-transparent color overlay for better text visibility (optional)
-		{
-			source = { Color = "#171624" }, -- Rose pine moon dark overlay
-			-- rose pine moon bg color: 232136
-			height = "100%",
-			width = "100%",
-			opacity = 0.95, -- Adjust opacity as needed
-		},
-	}
+	-- Windows specific settings
+	--
 end
 
 local function basename(path)
@@ -84,17 +68,16 @@ local function smart_nav(key, direction)
 	end)
 end
 
-local function split_resize_or_send(direction, delta, mod_keys)
+local function split_resize_or_send(direction, delta)
 	return wezterm.action_callback(function(window, pane)
 		if is_vim(pane) then
-			-- Let Neovim receive Shift+Arrow
 			local key_for_dir = {
 				Left = "LeftArrow",
 				Right = "RightArrow",
 				Up = "UpArrow",
 				Down = "DownArrow",
 			}
-			window:perform_action(act.SendKey({ key = key_for_dir[direction], mods = mod_keys }), pane)
+			window:perform_action(act.SendKey({ key = key_for_dir[direction], mods = "SHIFT" }), pane)
 		else
 			-- WezTerm pane resize everywhere else
 			window:perform_action(act.AdjustPaneSize({ direction, delta }), pane)
@@ -188,10 +171,10 @@ config.keys = {
 	{ key = "RightArrow", mods = split_mods, action = smart_rotate_lr("Clockwise") },
 
 	-- Pain resizes
-	{ key = "LeftArrow", mods = pane_resizes_mods, action = split_resize_or_send("Left", 3, split_mods) },
-	{ key = "RightArrow", mods = pane_resizes_mods, action = split_resize_or_send("Right", 3, split_mods) },
-	{ key = "UpArrow", mods = pane_resizes_mods, action = split_resize_or_send("Up", 2, split_mods) },
-	{ key = "DownArrow", mods = pane_resizes_mods, action = split_resize_or_send("Down", 2, split_mods) },
+	{ key = "LeftArrow", mods = pane_resizes_mods, action = split_resize_or_send("Left", 3) },
+	{ key = "RightArrow", mods = pane_resizes_mods, action = split_resize_or_send("Right", 3) },
+	{ key = "UpArrow", mods = pane_resizes_mods, action = split_resize_or_send("Up", 2) },
+	{ key = "DownArrow", mods = pane_resizes_mods, action = split_resize_or_send("Down", 2) },
 
 	-- Better tab nav
 	{ key = "l", mods = "CTRL", action = act.ActivateTabRelative(1) },
