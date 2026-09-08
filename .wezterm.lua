@@ -247,6 +247,13 @@ config.keys = {
 	-- Overwrite ctrl+u/d for scrolling
 	{ key = "d", mods = "CTRL", action = maybe_scroll("d", 0.5) },
 	{ key = "u", mods = "CTRL", action = maybe_scroll("u", -0.5) },
+
+	-- Unbind dumb ones
+	{
+		key = "m",
+		mods = "CMD|CTRL",
+		action = wezterm.action.DisableDefaultAssignment,
+	},
 }
 
 return config
