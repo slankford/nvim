@@ -59,7 +59,8 @@ return {
 		{ "<leader>gP", "<cmd>Neogit push<cr>", desc = "Neogit push" },
 		{ "<leader>gL", "<cmd>Neogit log<cr>", desc = "Neogit log" },
 		{ "<leader>go", "<cmd>DiffviewOpen<cr>", desc = "Diffview open" },
-		{ "<leader>gO", "<cmd>DiffviewClose<cr>", desc = "Diffview close" },
+		{ "<leader>gO", "<cmd>DiffviewOpen origin/dev...HEAD --imply-local<cr>", desc = "Diffview open against dev" },
+		{ "<leader>gq", "<cmd>DiffviewClose<cr>", desc = "Diffview close" },
 		{ "<leader>gh", "<cmd>DiffviewFileHistory %<cr>", desc = "File history" },
 	},
 	config = function()
