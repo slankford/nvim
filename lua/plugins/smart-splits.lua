@@ -26,10 +26,44 @@ return {
 			end
 		end
 
+		-- Over SSH, TERM_PROGRAM isn't forwarded so smart-splits can't detect WezTerm (and the
+		-- remote has no `wezterm cli`). Talk to the local WezTerm via OSC 1337 user vars instead.
+		local remote_wezterm = vim.env.SSH_TTY ~= nil and (vim.env.TERM_PROGRAM or ""):lower() ~= "wezterm"
+
+		local function set_wezterm_var(name, value)
+			local osc = string.format("\027]1337;SetUserVar=%s=%s\007", name, vim.base64.encode(value))
+			vim.fn["smart_splits#write_wezterm_var"](osc)
+		end
+
+		local nav_count = 0
+
 		ss.setup({
 			ignored_buftypes = { "quickfix", "prompt" },
 			ignored_filetypes = { "NvimTree", "nvim-tree" },
+			-- Only used when the multiplexer integration is unavailable (i.e. over SSH)
+			at_edge = remote_wezterm and function(ctx)
+				-- Counter makes every press a new value so WezTerm's user-var-changed always fires
+				nav_count = nav_count + 1
+				set_wezterm_var("NVIM_NAV", ctx.direction .. ":" .. nav_count)
+			end or nil,
 		})
+
+		if remote_wezterm then
+			-- Lets WezTerm's is_vim() see nvim behind the ssh process and forward Ctrl+Cmd+hjkl
+			local group = vim.api.nvim_create_augroup("SmartSplitsRemoteWezterm", {})
+			vim.api.nvim_create_autocmd({ "VimEnter", "VimResume" }, {
+				group = group,
+				callback = function()
+					set_wezterm_var("IS_NVIM", "true")
+				end,
+			})
+			vim.api.nvim_create_autocmd({ "VimLeavePre", "VimSuspend" }, {
+				group = group,
+				callback = function()
+					set_wezterm_var("IS_NVIM", "false")
+				end,
+			})
+		end
 
 		-- Move between splits; falls back to WezTerm panes when at the edge.
 		-- <C-hjkl>: WezTerm forwards Ctrl+Cmd (mac) / Ctrl+Alt (windows) + hjkl as plain Ctrl

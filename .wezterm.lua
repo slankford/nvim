@@ -256,4 +256,15 @@ config.keys = {
 	},
 }
 
+-- Remote nvim (over ssh) can't run `wezterm cli`, so smart-splits sets NVIM_NAV=<direction>:<n>
+-- when it hits an edge; move to the adjacent WezTerm pane in that direction
+wezterm.on("user-var-changed", function(window, pane, name, value)
+	if name == "NVIM_NAV" then
+		local dir = ({ left = "Left", right = "Right", up = "Up", down = "Down" })[value:match("^(%a+)")]
+		if dir then
+			window:perform_action(act.ActivatePaneDirection(dir), pane)
+		end
+	end
+end)
+
 return config
