@@ -227,10 +227,12 @@ return {
 		end, { desc = "Show active opencode port" })
 
 		-- Window Navigation
-		vim.keymap.set("t", "<C-h>", [[<C-\><C-n><C-w>h]], { desc = "Terminal -> left window" })
-		vim.keymap.set("t", "<C-j>", [[<C-\><C-n><C-w>j]], { desc = "Terminal -> lower window" })
-		vim.keymap.set("t", "<C-k>", [[<C-\><C-n><C-w>k]], { desc = "Terminal -> upper window" })
-		vim.keymap.set("t", "<C-l>", [[<C-\><C-n><C-w>l]], { desc = "Terminal -> right window" })
+		for _, lhs in ipairs({ "<C-%s>", "<C-M-%s>" }) do
+			vim.keymap.set("t", lhs:format("h"), [[<C-\><C-n><C-w>h]], { desc = "Terminal -> left window" })
+			vim.keymap.set("t", lhs:format("j"), [[<C-\><C-n><C-w>j]], { desc = "Terminal -> lower window" })
+			vim.keymap.set("t", lhs:format("k"), [[<C-\><C-n><C-w>k]], { desc = "Terminal -> upper window" })
+			vim.keymap.set("t", lhs:format("l"), [[<C-\><C-n><C-w>l]], { desc = "Terminal -> right window" })
+		end
 
 		vim.keymap.set({ "n", "v" }, "go", function()
 			return require("opencode").operator("@this ")

@@ -31,11 +31,15 @@ return {
 			ignored_filetypes = { "NvimTree", "nvim-tree" },
 		})
 
-		-- Move between splits; falls back to WezTerm panes when at the edge
-		vim.keymap.set("n", "<C-h>", ss.move_cursor_left, { silent = true, desc = "Move left (split/pane)" })
-		vim.keymap.set("n", "<C-j>", ss.move_cursor_down, { silent = true, desc = "Move down (split/pane)" })
-		vim.keymap.set("n", "<C-k>", ss.move_cursor_up, { silent = true, desc = "Move up (split/pane)" })
-		vim.keymap.set("n", "<C-l>", ss.move_cursor_right, { silent = true, desc = "Move right (split/pane)" })
+		-- Move between splits; falls back to WezTerm panes when at the edge.
+		-- <C-hjkl>: WezTerm forwards Ctrl+Cmd (mac) / Ctrl+Alt (windows) + hjkl as plain Ctrl
+		-- <C-M-hjkl>: Ctrl+Alt + hjkl pressed directly on mac (WezTerm doesn't bind it)
+		for _, lhs in ipairs({ "<C-%s>", "<C-M-%s>" }) do
+			vim.keymap.set("n", lhs:format("h"), ss.move_cursor_left, { silent = true, desc = "Move left (split/pane)" })
+			vim.keymap.set("n", lhs:format("j"), ss.move_cursor_down, { silent = true, desc = "Move down (split/pane)" })
+			vim.keymap.set("n", lhs:format("k"), ss.move_cursor_up, { silent = true, desc = "Move up (split/pane)" })
+			vim.keymap.set("n", lhs:format("l"), ss.move_cursor_right, { silent = true, desc = "Move right (split/pane)" })
+		end
 
 		-- Resize splits with Shift+Arrow keys
 		vim.keymap.set({ "n", "t" }, "<S-Left>", resize_without_touching_tree(ss.resize_left), { silent = true, desc = "Resize left" })
