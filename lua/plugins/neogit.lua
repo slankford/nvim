@@ -59,7 +59,18 @@ return {
 		{ "<leader>gP", "<cmd>Neogit push<cr>", desc = "Neogit push" },
 		{ "<leader>gL", "<cmd>Neogit log<cr>", desc = "Neogit log" },
 		{ "<leader>go", "<cmd>DiffviewOpen<cr>", desc = "Diffview open" },
-		{ "<leader>gO", "<cmd>DiffviewOpen origin/dev...HEAD --imply-local<cr>", desc = "Diffview open against dev" },
+		{
+			"<leader>gO",
+			function()
+				vim.ui.input({ prompt = "Diff HEAD against: ", default = "origin/dev" }, function(base)
+					if not base or base == "" then
+						return
+					end
+					vim.cmd("DiffviewOpen " .. base .. "...HEAD --imply-local")
+				end)
+			end,
+			desc = "Diffview open against branch",
+		},
 		{ "<leader>gq", "<cmd>DiffviewClose<cr>", desc = "Diffview close" },
 		{ "<leader>gh", "<cmd>DiffviewFileHistory %<cr>", desc = "File history" },
 	},
