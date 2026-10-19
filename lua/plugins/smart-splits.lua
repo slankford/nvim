@@ -1,5 +1,9 @@
+-- Pinned to the last v2 release. v3 moved multiplexer support into separate backend plugins and
+-- renamed config keys (at_edge -> move.at_edge); its WezTerm backend is still marked unstable.
+-- Migration notes: https://github.com/smart-splits-nvim/smart-splits.nvim#migration-from-v2
 return {
-	"mrjones2014/smart-splits.nvim",
+	"smart-splits-nvim/smart-splits.nvim",
+	tag = "v2.1.1-final",
 	lazy = false,
 	config = function()
 		local ss = require("smart-splits")
@@ -32,7 +36,13 @@ return {
 
 		local function set_wezterm_var(name, value)
 			local osc = string.format("\027]1337;SetUserVar=%s=%s\007", name, vim.base64.encode(value))
-			vim.fn["smart_splits#write_wezterm_var"](osc)
+			-- Write to stderr (the tty) so the sequence reaches WezTerm. Done here rather than via
+			-- smart-splits' private smart_splits#write_wezterm_var, which v3 removed.
+			if vim.fn.filewritable("/dev/fd/2") == 1 then
+				vim.fn.writefile({ osc }, "/dev/fd/2", "b")
+			else
+				vim.fn.chansend(vim.v.stderr, osc)
+			end
 		end
 
 		local nav_count = 0
