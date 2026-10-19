@@ -26,7 +26,7 @@ select_components() {
 	echo "  3) zoxide            – smart directory navigation"
 	echo "  4) eza               – modern ls replacement (eza/exa)"
 	echo "  5) nvm               – Node Version Manager + LTS node"
-	echo "  6) tree-sitter-cli   – tree-sitter CLI (requires npm/cargo)"
+	echo "  6) tree-sitter-cli   – tree-sitter CLI >= 0.26 via rustup/cargo (needed by nvim)"
 	echo "  7) nvim              – Neovim + config (includes ripgrep, build-essential, clang)"
 	echo "  8) starship          – shell prompt + theme"
 	echo ""
@@ -64,7 +64,8 @@ select_components() {
 # ---------------------------------------------------------------------------
 apt_update_if_needed() {
 	if [ "$INSTALL_ZSH" = true ] || [ "$INSTALL_ZOXIDE" = true ] ||
-		[ "$INSTALL_EZA" = true ] || [ "$INSTALL_NVIM" = true ]; then
+		[ "$INSTALL_EZA" = true ] || [ "$INSTALL_NVIM" = true ] ||
+		[ "$INSTALL_TREE_SITTER" = true ]; then
 		sudo apt-get update || true
 	fi
 }
@@ -123,36 +124,35 @@ install_nvm() {
 }
 
 install_tree_sitter() {
-	if ! command -v npm >/dev/null 2>&1; then
-		echo "npm not found; installing nodejs/npm via apt before tree-sitter-cli..."
-		sudo apt-get install -y nodejs npm
+	# nvim-treesitter (main branch) needs tree-sitter-cli >= 0.26.1 and a C compiler.
+	# Its README says not to use the npm package, and apt's cargo is too old to build it,
+	# so install a current Rust toolchain with rustup and build the CLI with cargo.
+	sudo apt-get install -y build-essential curl
+	if ! command -v rustup >/dev/null 2>&1 && [ ! -x "$HOME/.cargo/bin/rustup" ]; then
+		curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+	fi
+	export PATH="$HOME/.cargo/bin:$PATH"
+	rustup toolchain install stable
+	rustup default stable
+
+	if command -v npm >/dev/null 2>&1 && npm ls -g tree-sitter-cli >/dev/null 2>&1; then
+		echo "Removing npm tree-sitter-cli so it does not shadow the cargo build..."
+		npm uninstall -g tree-sitter-cli || true
 	fi
 
-	npm install -g tree-sitter-cli || true
-	if ! tree-sitter --version 2>/dev/null; then
-		echo "npm tree-sitter-cli unavailable; trying cargo fallback..."
-		sudo apt-get install -y cargo
-		npm uninstall -g tree-sitter-cli || true
-		if cargo install tree-sitter-cli --version 0.24.7 --locked; then
-			echo "Installed tree-sitter-cli via cargo (pinned, locked)."
-		else
-			echo "Cargo install failed, updating Rust toolchain with rustup..."
-			if ! command -v rustup >/dev/null 2>&1; then
-				curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-			fi
-			export PATH="$HOME/.cargo/bin:$PATH"
-			rustup toolchain install stable
-			rustup default stable
-			cargo install tree-sitter-cli --version 0.24.7 --locked
-			echo "Installed tree-sitter-cli via cargo after rustup update."
-		fi
-		"$HOME/.cargo/bin/tree-sitter" --version
-	fi
+	cargo install tree-sitter-cli --locked
+	"$HOME/.cargo/bin/tree-sitter" --version
+
+	grep -q '.cargo/bin' "$HOME/.zshrc" 2>/dev/null ||
+		echo 'export PATH="$HOME/.cargo/bin:$PATH"' >>"$HOME/.zshrc"
 }
 
 install_nvim() {
 	sudo apt-get install -y ripgrep build-essential clang
 	sudo snap install nvim --classic || true
+	# Stop snap auto-refreshing nvim: a surprise major upgrade can break this config.
+	# Upgrade on purpose with `sudo snap refresh nvim`.
+	sudo snap refresh --hold nvim || true
 	mkdir -p ~/.config
 	if [ ! -d "$HOME/.config/nvim" ]; then
 		git clone https://github.com/slankford/nvim.git ~/.config/nvim

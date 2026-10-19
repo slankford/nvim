@@ -57,7 +57,17 @@ return {
 
 		-- Python: debugpy runs from Mason's venv; the debuggee uses the project's
 		-- interpreter ($VIRTUAL_ENV, ./venv or ./.venv), detected by nvim-dap-python.
+		-- Test runner (<leader>dm/dM) is auto-detected: pytest if pytest.ini or [tool.pytest] exists,
+		-- otherwise unittest. Force it with require("dap-python").test_runner = "pytest".
 		require("dap-python").setup(mason_path .. "/packages/debugpy/venv/bin/python")
+		table.insert(dap.configurations.python, {
+			type = "python",
+			request = "launch",
+			name = "pytest: current file",
+			module = "pytest",
+			args = { "${file}", "-s" }, -- -s keeps stdout/stdin attached (print, breakpoint())
+			console = "integratedTerminal",
+		})
 
 		-- JS/TS (Angular): vscode-js-debug, installed by Mason as js-debug-adapter
 		for _, adapter in ipairs({ "pwa-node", "pwa-chrome" }) do
