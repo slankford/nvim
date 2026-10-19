@@ -21,8 +21,8 @@ M.on_attach = function(event)
 	keymap("n", "gr", "<cmd>Lspsaga finder ref<CR>", opts)
 	keymap("n", "gi", "<cmd>Lspsaga finder imp<CR>", opts)
 	keymap("n", "<leader>rn", "<cmd>Lspsaga rename<CR>", opts) -- Rename symbol
-	keymap("n", "<leader>D", "<cmd>Lspsaga show_line_diagnostics<CR>", opts) -- Line diagnostics (float)
-	keymap("n", "<leader>d", "<cmd>Lspsaga show_cursor_diagnostics<CR>", opts) -- Cursor diagnostics
+	keymap("n", "gL", "<cmd>Lspsaga show_line_diagnostics<CR>", opts) -- Line diagnostics (float)
+	keymap("n", "gl", "<cmd>Lspsaga show_cursor_diagnostics<CR>", opts) -- Cursor diagnostics
 	keymap("n", "<leader>pd", "<cmd>Lspsaga diagnostic_jump_prev<CR>", opts) -- previous diagnostic
 	keymap("n", "<leader>nd", "<cmd>Lspsaga diagnostic_jump_next<CR>", opts) -- next diagnostic
 	keymap("n", "K", "<cmd>Lspsaga hover_doc<CR>", opts) -- hover documentation

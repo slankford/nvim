@@ -31,7 +31,7 @@ return {
 		{
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
 			opts = {
-				ensure_installed = { "efm" },
+				ensure_installed = { "efm", "debugpy", "js-debug-adapter" },
 				run_on_start = true,
 			},
 		},

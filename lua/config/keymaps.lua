@@ -125,10 +125,10 @@ if vim.g.vscode then
 	map("n", "<leader>rn", function()
 		vim.fn.VSCodeNotify("editor.action.rename")
 	end, opts) -- Rename symbol
-	map("n", "<leader>D", function()
+	map("n", "gL", function()
 		vim.fn.VSCodeNotify("editor.action.showHover")
 	end, opts) -- Show hover (roughly like diagnostics)
-	map("n", "<leader>d", function()
+	map("n", "gl", function()
 		vim.fn.VSCodeNotify("editor.action.showHover")
 	end, opts) -- Show hover
 	map("n", "<leader>pd", function()
