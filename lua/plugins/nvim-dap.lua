@@ -45,21 +45,34 @@ return {
 		local dap = require("dap")
 		local dapui = require("dapui")
 
-		-- UI: open/close panels automatically with the debug session
+		-- UI: open panels when a session starts. They stay open after it ends so output and
+		-- tracebacks stay readable; close them with <leader>du.
 		dapui.setup()
 		dap.listeners.after.event_initialized["dapui_config"] = dapui.open
-		dap.listeners.before.event_terminated["dapui_config"] = dapui.close
-		dap.listeners.before.event_exited["dapui_config"] = dapui.close
 
 		vim.fn.sign_define("DapBreakpoint", { text = "●", texthl = "DiagnosticError" })
 		vim.fn.sign_define("DapBreakpointCondition", { text = "◆", texthl = "DiagnosticWarn" })
 		vim.fn.sign_define("DapStopped", { text = "▶", texthl = "DiagnosticOk", linehl = "Visual" })
 
-		-- Python: debugpy runs from Mason's venv; the debuggee uses the project's
-		-- interpreter ($VIRTUAL_ENV, ./venv or ./.venv), detected by nvim-dap-python.
-		-- Test runner (<leader>dm/dM) is auto-detected: pytest if pytest.ini or [tool.pytest] exists,
-		-- otherwise unittest. Force it with require("dap-python").test_runner = "pytest".
-		require("dap-python").setup(mason_path .. "/packages/debugpy/venv/bin/python")
+		-- Python: debugpy runs from Mason's venv; the debuggee uses the project's interpreter.
+		local dap_python = require("dap-python")
+		dap_python.setup(mason_path .. "/packages/debugpy/venv/bin/python")
+
+		-- <leader>dm/dM always use pytest (it also runs unittest-style tests). dap-python's
+		-- auto-detect only picks pytest when pytest.ini or [tool.pytest] exists.
+		dap_python.test_runner = "pytest"
+
+		-- Used when $VIRTUAL_ENV/$CONDA_PREFIX are unset: walk up from the current file to the
+		-- nearest .venv/venv, so nvim doesn't have to be started from the project root.
+		dap_python.resolve_python = function()
+			local file_dir = vim.fs.dirname(vim.api.nvim_buf_get_name(0))
+			local venv = vim.fs.find({ ".venv", "venv" }, { upward = true, type = "directory", path = file_dir })[1]
+			if venv and vim.fn.executable(venv .. "/bin/python") == 1 then
+				return venv .. "/bin/python"
+			end
+			return vim.fn.exepath("python3")
+		end
+
 		table.insert(dap.configurations.python, {
 			type = "python",
 			request = "launch",
