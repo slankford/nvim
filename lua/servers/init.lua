@@ -7,7 +7,7 @@ local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 -- Language Server Protocol (LSP)
 require("servers.lua_ls").setup(capabilities)
-require("servers.pyright").setup(capabilities)
+require("servers.basedpyright").setup(capabilities)
 -- require("servers.gopls")(capabilities)
 require("servers.jsonls").setup(capabilities)
 -- require("servers.ts_ls").setup(capabilities)
@@ -26,7 +26,7 @@ require("servers.efm-langserver").setup(capabilities)
 
 vim.lsp.enable({
 	"lua_ls",
-	"pyright",
+	"basedpyright",
 	-- 'gopls',
 	"jsonls",
 	-- "ts_ls",

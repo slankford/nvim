@@ -17,7 +17,7 @@ return {
 			opts = {
 				ensure_installed = {
 					"lua_ls",
-					"pyright",
+					"basedpyright",
 					"jsonls",
 					"vtsls",
 					"bashls",
@@ -25,7 +25,7 @@ return {
 					-- "emmet_ls",
 					"yamlls",
 				},
-				automatic_enable = { exclude = { "ts_ls", "efm" } },
+				automatic_enable = { exclude = { "ts_ls", "efm", "pyright" } },
 			},
 		},
 		{
