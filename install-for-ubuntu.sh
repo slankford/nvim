@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 set -eo pipefail
 
+if [ "$(id -u)" -eq 0 ]; then
+	echo "Run as your normal user (not sudo); the script calls sudo itself." >&2
+	exit 1
+fi
+
 # ---------------------------------------------------------------------------
 # Component flags
 # ---------------------------------------------------------------------------
@@ -160,6 +165,7 @@ install_nvim() {
 }
 
 install_starship() {
+	mkdir -p "$HOME/.config"
 	cat >"$HOME/.config/starship.toml" <<'EOF'
 format = "$username$hostname $directory$fill$line_break$character"
 right_format = "$time"
@@ -194,8 +200,8 @@ configure_zshrc() {
 	touch "$HOME/.zshrc"
 
 	if [ "$INSTALL_FZF" = true ]; then
-		grep -q "export PATH='$HOME/.fzf/bin:$PATH'" "$HOME/.zshrc" ||
-			echo "export PATH='$HOME/.fzf/bin:$PATH'" >>"$HOME/.zshrc"
+		grep -q '.fzf/bin' "$HOME/.zshrc" ||
+			echo 'export PATH="$HOME/.fzf/bin:$PATH"' >>"$HOME/.zshrc"
 		grep -q "\$HOME/.fzf/shell/completion.zsh" "$HOME/.zshrc" ||
 			echo "[ -f '$HOME/.fzf/shell/completion.zsh' ] && source '$HOME/.fzf/shell/completion.zsh'" >>"$HOME/.zshrc"
 		grep -q "\$HOME/.fzf/shell/key-bindings.zsh" "$HOME/.zshrc" ||
@@ -218,12 +224,12 @@ configure_zshrc() {
 
 	if [ "$INSTALL_STARSHIP" = true ]; then
 		grep -q 'starship init zsh' "$HOME/.zshrc" ||
-			echo "eval '$(starship init zsh)'" >>"$HOME/.zshrc"
+			echo 'eval "$(starship init zsh)"' >>"$HOME/.zshrc"
 	fi
 
 	if [ "$INSTALL_ZOXIDE" = true ]; then
 		grep -q 'zoxide init zsh' "$HOME/.zshrc" ||
-			echo "eval '$(zoxide init zsh)'" >>"$HOME/.zshrc"
+			echo 'eval "$(zoxide init zsh)"' >>"$HOME/.zshrc"
 	fi
 
 	if ls --color=auto >/dev/null 2>&1; then
